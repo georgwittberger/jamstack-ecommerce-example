@@ -12,7 +12,7 @@
 
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
-import { ProductResult } from '~/types/product'
+import { ProductResult } from '@/types/product'
 
 @Component({
   async asyncData({ $content, params }) {

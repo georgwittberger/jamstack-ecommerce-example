@@ -16,7 +16,7 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'nuxt-property-decorator'
-import { ProductResult } from '~/types/product'
+import { ProductResult } from '@/types/product'
 
 @Component
 export default class ProductTile extends Vue {
@@ -25,4 +25,10 @@ export default class ProductTile extends Vue {
 }
 </script>
 
-<style></style>
+<style lang="scss">
+@import '@/assets/css/variables';
+
+h2 {
+  color: $primary;
+}
+</style>
