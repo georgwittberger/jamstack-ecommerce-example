@@ -1,0 +1,10 @@
+{
+  "id": "00003",
+  "name": "Saw",
+  "description": "A sharp saw to cut your life into pieces.",
+  "properties": [
+    "Available in length from 20 cm to 50 cm",
+    "Stainless steel",
+    "Ergonomic grip"
+  ]
+}

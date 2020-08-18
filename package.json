@@ -9,12 +9,14 @@
     "generate": "nuxt-ts generate"
   },
   "dependencies": {
-    "@nuxt/content": "^1.5.0",
+    "@nuxt/content": "^1.6.0",
     "@nuxt/typescript-runtime": "^1.0.0",
     "@nuxtjs/axios": "^5.12.0",
     "bootstrap": "^4.5.0",
-    "bootstrap-vue": "^2.15.0",
-    "nuxt": "^2.14.0"
+    "bootstrap-vue": "^2.16.0",
+    "nuxt": "^2.14.0",
+    "nuxt-property-decorator": "^2.7.2",
+    "vue-class-component": "^7.2.0"
   },
   "devDependencies": {
     "@nuxt/types": "^2.14.0",

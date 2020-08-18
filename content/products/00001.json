@@ -1,0 +1,10 @@
+{
+  "id": "00001",
+  "name": "Screwdriver",
+  "description": "A very robust screwdriver that will drive you crazy.",
+  "properties": [
+    "Available in sizes from 2 mm to 16 mm",
+    "Hardened tip",
+    "Isolated grip"
+  ]
+}
