@@ -1,32 +1,9 @@
 <template>
   <div>
     <h1>Cart</h1>
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">Product Name</th>
-          <th scope="col">Product ID</th>
-          <th scope="col">Quantity</th>
-          <th scope="col">Actions</th>
-        </tr>
-      </thead>
-      <tbody @click="handleCartItemAction">
-        <tr v-for="item in cartItems" :key="item.id">
-          <td>{{ item.productName }}</td>
-          <td>{{ item.productId }}</td>
-          <td>{{ item.quantity }}</td>
-          <td>
-            <button
-              data-action="remove"
-              :data-cart-item-id="item.id"
-              class="btn btn-sm btn-secondary"
-            >
-              Remove
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <ClientOnly>
+      <CartItemsTable />
+    </ClientOnly>
     <div>
       <button @click="clearCart" class="btn btn-secondary">
         Clear cart
@@ -50,21 +27,6 @@ export default class CartPage extends Vue {
 
   head() {
     return { title: 'Cart' }
-  }
-
-  get cartItems() {
-    return this.cartStore.cartItems
-  }
-
-  handleCartItemAction(event: Event) {
-    const element = event.target as HTMLElement
-    const action = element.dataset.action
-    if (!action) return
-    if (action === 'remove') {
-      const cartItemId = element.dataset.cartItemId
-      if (!cartItemId) return
-      this.cartStore.removeCartItem(cartItemId)
-    }
   }
 
   clearCart() {

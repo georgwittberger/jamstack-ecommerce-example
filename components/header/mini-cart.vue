@@ -1,7 +1,7 @@
 <template>
   <div>
     <nuxt-link to="/cart">Cart</nuxt-link>
-    <span class="mini-cart__count">
+    <span v-if="cartItemsCount > 0" class="mini-cart__count">
       {{ cartItemsCount }}
     </span>
   </div>

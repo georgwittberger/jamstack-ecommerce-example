@@ -1,7 +1,9 @@
 <template>
   <div class="container">
     <MainNavigation />
-    <MiniCart />
+    <ClientOnly>
+      <MiniCart />
+    </ClientOnly>
     <Nuxt />
   </div>
 </template>
