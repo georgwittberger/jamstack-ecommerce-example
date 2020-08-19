@@ -3,39 +3,51 @@ import { v4 as uuid4 } from 'uuid'
 import { CartItem } from '@/types/cart/cart-item'
 import { Product } from '@/types/products/product'
 
+const cartStateStorageKey = 'cart.state'
+
 @Module({
   name: 'cart',
   stateFactory: true,
   namespaced: true,
 })
 export default class CartModule extends VuexModule {
-  items: CartItem[] = []
+  cartItems: CartItem[] = []
 
-  get cartItemCount(): number {
-    return this.items.length
+  get cartItemsCount(): number {
+    return this.cartItems.length
   }
 
   @Mutation
-  addCartItemToState(item: CartItem) {
-    this.items = [...this.items, item]
+  addCartItemToState(item: CartItem): void {
+    this.cartItems = [...this.cartItems, item]
   }
 
   @Mutation
-  setCartItemsState(items: CartItem[]) {
-    this.items = items
+  removeCartItemFromState(id: string): void {
+    const itemIndex = this.cartItems.findIndex((item) => item.id === id)
+    if (itemIndex < 0) return
+    const remainingCartItems = [...this.cartItems]
+    remainingCartItems.splice(itemIndex, 1)
+    this.cartItems = remainingCartItems
+  }
+
+  @Mutation
+  removeAllCartItemsFromState(): void {
+    this.cartItems = []
+  }
+
+  @Mutation
+  setCartState(cartState: PersistentCartState): void {
+    this.cartItems = cartState.cartItems
   }
 
   @Action
-  init() {
-    const cartItems = restoreCartItems()
-    this.context.commit('setCartItemsState', cartItems)
+  init(): void {
+    this.context.dispatch('restoreState')
   }
 
   @Action
-  async addCartItem({
-    product,
-    quantity,
-  }: AddCartItemOptions): Promise<CartItem> {
+  addCartItem({ product, quantity }: AddCartItemOptions): CartItem {
     const item: CartItem = {
       id: uuid4(),
       productId: product.id,
@@ -43,8 +55,37 @@ export default class CartModule extends VuexModule {
       quantity,
     }
     this.context.commit('addCartItemToState', item)
-    persistCartItems(this.items)
+    this.context.dispatch('persistState')
     return item
+  }
+
+  @Action
+  removeCartItem(id: string): void {
+    this.context.commit('removeCartItemFromState', id)
+    this.context.dispatch('persistState')
+  }
+
+  @Action
+  clearCartItems(): void {
+    this.context.commit('removeAllCartItemsFromState')
+    this.context.dispatch('persistState')
+  }
+
+  @Action
+  persistState(): void {
+    const cartState: PersistentCartState = { cartItems: this.cartItems }
+    window.sessionStorage.setItem(
+      cartStateStorageKey,
+      JSON.stringify(cartState)
+    )
+  }
+
+  @Action
+  restoreState(): void {
+    const cartStateString = window.sessionStorage.getItem(cartStateStorageKey)
+    if (!cartStateString) return
+    const cartState: PersistentCartState = JSON.parse(cartStateString)
+    this.context.commit('setCartState', cartState)
   }
 }
 
@@ -53,14 +94,6 @@ interface AddCartItemOptions {
   quantity: number
 }
 
-const cartItemsStorageKey = 'cart.items'
-
-function persistCartItems(items: CartItem[]) {
-  window.sessionStorage.setItem(cartItemsStorageKey, JSON.stringify(items))
-}
-
-function restoreCartItems(): CartItem[] {
-  const cartItems = window.sessionStorage.getItem(cartItemsStorageKey)
-  if (!cartItems) return []
-  return JSON.parse(cartItems)
+interface PersistentCartState {
+  cartItems: CartItem[]
 }

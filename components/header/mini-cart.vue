@@ -1,10 +1,10 @@
 <template>
-  <span>
+  <div>
     <nuxt-link to="/cart">Cart</nuxt-link>
-    <span v-if="cartItemCount > 0" class="mini-cart__count">
-      {{ cartItemCount }}
+    <span v-if="hasCartItems" class="mini-cart__count">
+      {{ cartItemsCount }}
     </span>
-  </span>
+  </div>
 </template>
 
 <script lang="ts">
@@ -20,10 +20,21 @@ export default class MiniCart extends Vue {
     this.cartStore = getModule(CartModule, this.$store)
   }
 
-  get cartItemCount() {
-    return this.cartStore.cartItemCount
+  get hasCartItems() {
+    return this.cartStore.cartItemsCount > 0
+  }
+
+  get cartItemsCount() {
+    return this.cartStore.cartItemsCount
   }
 }
 </script>
 
-<style></style>
+<style lang="scss">
+@import '@/assets/css/variables';
+
+.mini-cart__count {
+  color: $primary;
+  font-weight: bold;
+}
+</style>
