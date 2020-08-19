@@ -10,7 +10,7 @@
 
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
-import { MainNavigationResult } from '@/types/main-navigation'
+import { MainNavigationResult } from '@/types/header/main-navigation'
 
 @Component
 export default class MainNavigation extends Vue {

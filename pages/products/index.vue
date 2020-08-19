@@ -13,7 +13,7 @@
 
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
-import { ProductResult } from '@/types/product'
+import { ProductResult } from '@/types/products/product'
 
 @Component({
   async asyncData({ $content }) {
@@ -24,7 +24,7 @@ import { ProductResult } from '@/types/product'
     return { products }
   },
 })
-export default class ProductList extends Vue {
+export default class ProductListPage extends Vue {
   products: ProductResult[] = []
 
   head() {

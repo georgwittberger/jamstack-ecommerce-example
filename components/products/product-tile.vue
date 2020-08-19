@@ -16,7 +16,7 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'nuxt-property-decorator'
-import { ProductResult } from '@/types/product'
+import { ProductResult } from '@/types/products/product'
 
 @Component
 export default class ProductTile extends Vue {

@@ -14,7 +14,7 @@
 import { Vue, Component } from 'nuxt-property-decorator'
 
 @Component
-export default class Homepage extends Vue {
+export default class HomePage extends Vue {
   head() {
     return { title: 'JAMStack E-Commerce' }
   }

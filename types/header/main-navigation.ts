@@ -1,4 +1,4 @@
-import { NuxtContentResult } from './nuxt-content-result'
+import { NuxtContentResult } from '@/types/nuxt-content-result'
 
 export interface MainNavigationResult
   extends MainNavigation,
