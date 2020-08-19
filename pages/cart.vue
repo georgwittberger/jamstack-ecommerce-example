@@ -10,7 +10,7 @@
           <th scope="col">Actions</th>
         </tr>
       </thead>
-      <tbody v-if="cartItems.length > 0" @click="handleCartItemAction">
+      <tbody @click="handleCartItemAction">
         <tr v-for="item in cartItems" :key="item.id">
           <td>{{ item.productName }}</td>
           <td>{{ item.productId }}</td>
