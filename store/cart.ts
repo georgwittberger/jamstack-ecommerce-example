@@ -3,8 +3,6 @@ import { v4 as uuid4 } from 'uuid'
 import { CartItem } from '@/types/cart/cart-item'
 import { Product } from '@/types/products/product'
 
-const cartStateStorageKey = 'cart.state'
-
 @Module({
   name: 'cart',
   stateFactory: true,
@@ -88,6 +86,8 @@ export default class CartModule extends VuexModule {
     this.context.commit('setCartState', cartState)
   }
 }
+
+const cartStateStorageKey = 'cart.state'
 
 interface AddCartItemOptions {
   product: Product

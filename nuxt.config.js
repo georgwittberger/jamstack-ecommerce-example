@@ -54,6 +54,8 @@ export default {
     '@nuxtjs/axios',
     // Doc: https://github.com/nuxt/content
     '@nuxt/content',
+    // Doc: https://auth.nuxtjs.org/
+    '@nuxtjs/auth',
   ],
   /*
    * Axios module configuration
@@ -79,5 +81,29 @@ export default {
   bootstrapVue: {
     bootstrapCSS: false,
     bootstrapVueCSS: false,
+  },
+  /*
+   * Auth module configuration
+   * See https://auth.nuxtjs.org/api/options.html
+   */
+  auth: {
+    redirect: {
+      login: '/login',
+      callback: '/login/callback',
+    },
+    defaultStrategy: 'salesforce',
+    strategies: {
+      salesforce: {
+        _scheme: 'oauth2',
+        authorization_endpoint: process.env.SALESFORCE_AUTHORIZE_ENDPOINT,
+        userinfo_endpoint: process.env.SALESFORCE_USERINFO_ENDPOINT,
+        access_token_endpoint: process.env.SALESFORCE_TOKEN_ENDPOINT,
+        client_id: process.env.SALESFORCE_CLIENT_ID,
+        scope: ['openid', 'id', 'refresh_token'],
+        token_type: 'Bearer',
+        token_key: 'access_token',
+        refresh_token_key: 'refresh_token',
+      },
+    },
   },
 }

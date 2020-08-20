@@ -5,6 +5,8 @@
         <nuxt-link :to="entry.path">{{ entry.name }}</nuxt-link>
       </li>
     </ul>
+    <LoginButton v-if="!$auth.loggedIn" />
+    <UserMenu v-if="$auth.loggedIn" />
   </div>
 </template>
 
