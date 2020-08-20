@@ -91,8 +91,8 @@ export default {
       login: '/login',
       callback: '/login/callback',
     },
-    defaultStrategy: 'salesforce',
     strategies: {
+      local: false,
       salesforce: {
         _scheme: 'oauth2',
         authorization_endpoint: process.env.SALESFORCE_AUTHORIZE_ENDPOINT,
