@@ -1,10 +1,9 @@
 <template>
   <div>
     <h1>Login</h1>
-    <p>Please authenticate with your Salesforce user account.</p>
     <div>
-      <button @click="loginWithSalesforce" class="btn btn-primary">
-        Login with Salesforce
+      <button @click="loginWithOauth2" class="btn btn-primary">
+        Continue to login
       </button>
     </div>
   </div>
@@ -19,8 +18,8 @@ export default class LoginPage extends Vue {
     return { title: 'Login' }
   }
 
-  loginWithSalesforce() {
-    this.$auth.loginWith('salesforce')
+  loginWithOauth2() {
+    this.$auth.loginWith('oauth2')
   }
 }
 </script>

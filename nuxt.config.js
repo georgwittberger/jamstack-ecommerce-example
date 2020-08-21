@@ -93,13 +93,13 @@ export default {
     },
     strategies: {
       local: false,
-      salesforce: {
+      oauth2: {
         _scheme: 'oauth2',
-        authorization_endpoint: process.env.SALESFORCE_AUTHORIZE_ENDPOINT,
-        userinfo_endpoint: process.env.SALESFORCE_USERINFO_ENDPOINT,
-        access_token_endpoint: process.env.SALESFORCE_TOKEN_ENDPOINT,
-        client_id: process.env.SALESFORCE_CLIENT_ID,
-        scope: ['openid', 'id', 'refresh_token'],
+        authorization_endpoint: process.env.OAUTH2_AUTHORIZE_ENDPOINT,
+        userinfo_endpoint: process.env.OAUTH2_USERINFO_ENDPOINT,
+        access_token_endpoint: process.env.OAUTH2_TOKEN_ENDPOINT,
+        client_id: process.env.OAUTH2_CLIENT_ID,
+        scope: (process.env.OAUTH2_SCOPES || 'openid,profile').split(','),
         token_type: 'Bearer',
         token_key: 'access_token',
         refresh_token_key: 'refresh_token',

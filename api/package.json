@@ -1,0 +1,28 @@
+{
+  "name": "jamstack-ecommerce-api",
+  "version": "1.0.0",
+  "description": "API server for the JAMStack E-Commerce example",
+  "main": "index.ts",
+  "author": "Georg Wittberger <georg.wittberger@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "ts-node index.ts"
+  },
+  "dependencies": {
+    "@koa/cors": "^3.1.0",
+    "@koa/router": "^9.4.0",
+    "axios": "^0.20.0",
+    "dotenv": "^8.2.0",
+    "koa": "^2.13.0",
+    "ts-node": "^8.10.2",
+    "typescript": "^4.0.2"
+  },
+  "devDependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/dotenv": "^8.2.0",
+    "@types/koa": "^2.11.4",
+    "@types/koa__cors": "^3.0.1",
+    "@types/koa__router": "^8.0.2"
+  }
+}

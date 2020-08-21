@@ -1,6 +1,7 @@
 <template>
   <ul>
     <li>Logged in as: {{ $auth.user.name }}</li>
+    <li><a @click="logout" href="#">Logout</a></li>
   </ul>
 </template>
 
@@ -8,7 +9,12 @@
 import { Vue, Component } from 'nuxt-property-decorator'
 
 @Component
-export default class UserMenu extends Vue {}
+export default class UserMenu extends Vue {
+  logout(event: Event) {
+    event.preventDefault()
+    this.$auth.logout()
+  }
+}
 </script>
 
 <style></style>
