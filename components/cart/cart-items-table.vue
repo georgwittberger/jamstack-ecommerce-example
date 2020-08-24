@@ -34,14 +34,10 @@ import CartModule from '@/store/cart'
 
 @Component
 export default class CartItemsTable extends Vue {
-  private cartStore!: CartModule
-
-  created() {
-    this.cartStore = getModule(CartModule, this.$store)
-  }
+  private cartModule = getModule(CartModule, this.$store)
 
   get cartItems() {
-    return this.cartStore.cartItems
+    return this.cartModule.cartItems
   }
 
   handleCartItemAction(event: Event) {
@@ -51,7 +47,7 @@ export default class CartItemsTable extends Vue {
     if (action === 'remove') {
       const cartItemId = element.dataset.cartItemId
       if (!cartItemId) return
-      this.cartStore.removeCartItem(cartItemId)
+      this.cartModule.removeCartItem(cartItemId)
     }
   }
 }

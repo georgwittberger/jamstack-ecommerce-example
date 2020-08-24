@@ -34,11 +34,7 @@ import { ProductResult } from '@/types/products/product'
 export default class ProductDetailPage extends Vue {
   product: ProductResult | null = null
   quantity = 1
-  private cartStore!: CartModule
-
-  created() {
-    this.cartStore = getModule(CartModule, this.$store)
-  }
+  private cartModule = getModule(CartModule, this.$store)
 
   head() {
     return { title: this.product ? this.product.name : 'Product' }
@@ -47,7 +43,7 @@ export default class ProductDetailPage extends Vue {
   async addItemToCart() {
     if (!this.product) return
     try {
-      await this.cartStore.addCartItem({
+      await this.cartModule.addCartItem({
         product: this.product,
         quantity: this.quantity,
       })

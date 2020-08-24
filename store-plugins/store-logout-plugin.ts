@@ -2,7 +2,7 @@ import { Store } from 'vuex'
 import { getModule } from 'vuex-module-decorators'
 import CartModule from '@/store/cart'
 
-const storeLogoutPlugin: (store: Store<any>) => void = (store) => {
+export function storeLogoutPlugin(store: Store<any>): void {
   let previouslyLoggedIn = store.state.auth?.loggedIn
   store.subscribe((mutation, state) => {
     const currentlyLoggedIn = state.auth?.loggedIn
@@ -14,9 +14,6 @@ const storeLogoutPlugin: (store: Store<any>) => void = (store) => {
   })
 }
 
-export default storeLogoutPlugin
-
 function handleLogout(store: Store<any>) {
-  const cartStore = getModule(CartModule, store)
-  cartStore.clearCartItems()
+  getModule(CartModule, store).clearCartItems()
 }

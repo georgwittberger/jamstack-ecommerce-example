@@ -14,14 +14,10 @@ import CartModule from '@/store/cart'
 
 @Component
 export default class MiniCart extends Vue {
-  private cartStore!: CartModule
-
-  created() {
-    this.cartStore = getModule(CartModule, this.$store)
-  }
+  private cartModule = getModule(CartModule, this.$store)
 
   get cartItemsCount() {
-    return this.cartStore.cartItemsCount
+    return this.cartModule.cartItemsCount
   }
 }
 </script>

@@ -19,18 +19,14 @@ import CartModule from '@/store/cart'
 
 @Component
 export default class CartPage extends Vue {
-  private cartStore!: CartModule
-
-  created() {
-    this.cartStore = getModule(CartModule, this.$store)
-  }
+  private cartModule = getModule(CartModule, this.$store)
 
   head() {
     return { title: 'Cart' }
   }
 
   clearCart() {
-    this.cartStore.clearCartItems()
+    this.cartModule.clearCartItems()
   }
 }
 </script>

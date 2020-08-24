@@ -34,7 +34,7 @@ export default {
    * Plugins to load before mounting the App
    * https://nuxtjs.org/guide/plugins
    */
-  plugins: [{ src: '@/plugins/store-init-plugin.ts', mode: 'client' }],
+  plugins: ['@/plugins/global-axios', '@/plugins/store-initializer'],
   /*
    * Auto import components
    * See https://nuxtjs.org/api/configuration-components

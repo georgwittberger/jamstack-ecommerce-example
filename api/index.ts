@@ -3,16 +3,23 @@ import Koa from 'koa'
 import Router from '@koa/router'
 import cors from '@koa/cors'
 import { createUserInfoRouter } from './user-info'
+import { createCompanyInfoRouter } from './company-info'
 
 const port = process.env.PORT || 3000
 const app = new Koa()
 const router = new Router()
 const userInfoRouter = createUserInfoRouter()
+const companyInfoRouter = createCompanyInfoRouter()
 
 router.use(
   '/userinfo',
   userInfoRouter.routes(),
   userInfoRouter.allowedMethods()
+)
+router.use(
+  '/companyinfo',
+  companyInfoRouter.routes(),
+  companyInfoRouter.allowedMethods()
 )
 
 app.use(cors({ origin: process.env.SECURITY_CORS_ORIGIN, credentials: true }))
