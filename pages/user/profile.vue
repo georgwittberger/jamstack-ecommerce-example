@@ -28,7 +28,8 @@
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
 import { getModule } from 'vuex-module-decorators'
-import UserModule, { CompanyInfo } from '@/store/user'
+import UserModule from '@/store/user'
+import { CompanyInfo } from '@/types/user/company-info'
 
 @Component({
   middleware: 'auth',

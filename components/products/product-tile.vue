@@ -1,5 +1,5 @@
 <template>
-  <div class="col-sm-6 col-md-4 col-lg-3">
+  <b-col cols="12" sm="6" md="4" lg="3">
     <h2>{{ product.name }}</h2>
     <p>{{ product.description }}</p>
     <div>
@@ -11,7 +11,7 @@
         Details
       </nuxt-link>
     </div>
-  </div>
+  </b-col>
 </template>
 
 <script lang="ts">

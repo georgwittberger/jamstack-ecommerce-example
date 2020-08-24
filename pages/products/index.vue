@@ -1,13 +1,13 @@
 <template>
   <div>
     <h1>All Products</h1>
-    <div class="row">
+    <b-row>
       <ProductTile
         v-for="product in products"
         :key="product.id"
         :product="product"
       />
-    </div>
+    </b-row>
   </div>
 </template>
 

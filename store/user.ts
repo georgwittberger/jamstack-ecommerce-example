@@ -1,5 +1,6 @@
 import { Action, Module, Mutation, VuexModule } from 'vuex-module-decorators'
 import { $axios } from '@/plugins/global-axios'
+import { CompanyInfo } from '@/types/user/company-info'
 
 @Module({
   name: 'user',
@@ -22,16 +23,5 @@ export default class UserModule extends VuexModule {
     const companyInfo: CompanyInfo = await $axios.$get('/companyinfo')
     this.context.commit('addCompanyInfoToState', companyInfo)
     return companyInfo
-  }
-}
-
-export interface CompanyInfo {
-  name: string
-  number: string
-  billingAddress: {
-    street: string
-    postalCode: string
-    city: string
-    country: string
   }
 }

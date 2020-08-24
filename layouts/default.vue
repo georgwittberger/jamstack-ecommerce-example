@@ -1,11 +1,11 @@
 <template>
-  <div class="container">
+  <b-container>
     <MainNavigation />
     <ClientOnly>
       <MiniCart />
     </ClientOnly>
     <Nuxt />
-  </div>
+  </b-container>
 </template>
 
 <script lang="ts">
