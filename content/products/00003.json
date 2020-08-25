@@ -1,10 +1,7 @@
 {
   "id": "00003",
+  "sku": "0-000-3",
   "name": "Saw",
   "description": "A sharp saw to cut your life into pieces.",
-  "properties": [
-    "Available in length from 20 cm to 50 cm",
-    "Stainless steel",
-    "Ergonomic grip"
-  ]
+  "price": 34.99
 }

@@ -3,15 +3,16 @@
     <thead>
       <tr>
         <th scope="col">Product Name</th>
-        <th scope="col">Product ID</th>
+        <th scope="col">Product Number</th>
         <th scope="col">Quantity</th>
+        <th scope="col">Total Price</th>
         <th scope="col">Actions</th>
       </tr>
     </thead>
     <tbody>
       <tr v-for="cartItem in cartItems" :key="cartItem.id">
         <td>{{ cartItem.productName }}</td>
-        <td>{{ cartItem.productId }}</td>
+        <td>{{ cartItem.productSku }}</td>
         <td>
           <b-form-input
             type="number"
@@ -21,6 +22,7 @@
             @update="updateCartItemQuantity(cartItem, $event)"
           ></b-form-input>
         </td>
+        <td>{{ cartItem.totalPrice | currency }}</td>
         <td>
           <b-button
             size="sm"

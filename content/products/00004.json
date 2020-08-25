@@ -1,10 +1,7 @@
 {
   "id": "00004",
-  "name": "Drill",
-  "description": "A powerful drill you can use without a drill instructor.",
-  "properties": [
-    "Power up to 1800 W",
-    "Li-Ion Battery included",
-    "Assistive light"
-  ]
+  "sku": "0-000-4",
+  "name": "Drilling Machine",
+  "description": "A powerful drilling machine usable without a drill instructor.",
+  "price": 129.99
 }

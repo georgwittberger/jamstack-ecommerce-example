@@ -1,17 +1,14 @@
 <template>
   <div v-if="product">
     <h1>{{ product.name }}</h1>
+    <p>Product Number: {{ product.sku }}</p>
     <p>{{ product.description }}</p>
-    <ul>
-      <li v-for="property in product.properties" :key="property">
-        {{ property }}
-      </li>
-    </ul>
+    <p>{{ product.price | currency }}</p>
     <div>
-      <input type="number" v-model="quantity" />
-      <button @click="addItemToCart" class="btn btn-primary">
-        Add to cart
-      </button>
+      <b-form-input type="number" number v-model="quantity"></b-form-input>
+      <b-button variant="primary" @click="addProductToCart">
+        Add to Cart
+      </b-button>
     </div>
   </div>
 </template>
@@ -40,7 +37,7 @@ export default class ProductDetailPage extends Vue {
     return { title: this.product ? this.product.name : 'Product' }
   }
 
-  async addItemToCart() {
+  async addProductToCart() {
     if (!this.product) return
     try {
       await this.cartModule.addCartItem({

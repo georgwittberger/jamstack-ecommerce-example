@@ -1,10 +1,7 @@
 {
   "id": "00001",
+  "sku": "0-000-1",
   "name": "Screwdriver",
   "description": "A very robust screwdriver that will drive you crazy.",
-  "properties": [
-    "Available in sizes from 2 mm to 16 mm",
-    "Hardened tip",
-    "Isolated grip"
-  ]
+  "price": 15.99
 }

@@ -1,10 +1,7 @@
 {
   "id": "00002",
+  "sku": "0-000-2",
   "name": "Hammer",
-  "description": "A heavy hammer allowing you to make every problem a nail.",
-  "properties": [
-    "Available in weights from 200 g to 1500 g",
-    "Stainless steel",
-    "Wooden grip"
-  ]
+  "description": "A heavy hammer to make every problem a nail.",
+  "price": 18.99
 }

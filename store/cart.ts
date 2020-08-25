@@ -17,6 +17,10 @@ export default class CartModule extends VuexModule {
     return this.cartItems.length
   }
 
+  get cartTotalPrice(): number {
+    return this.cartItems.reduce((total, item) => total + item.totalPrice, 0)
+  }
+
   @Mutation
   addCartItemToState(item: CartItem): void {
     this.cartItems = [...this.cartItems, item]
@@ -33,6 +37,7 @@ export default class CartModule extends VuexModule {
     const item = this.cartItems.find((item) => item.id === cartItemId)
     if (!item) return
     item.quantity = quantity
+    item.totalPrice = item.unitPrice * quantity
     this.cartItems = [...this.cartItems]
   }
 
@@ -73,8 +78,11 @@ export default class CartModule extends VuexModule {
     const item: CartItem = {
       id: uuid4(),
       productId: product.id,
+      productSku: product.sku,
       productName: product.name,
       quantity,
+      unitPrice: product.price,
+      totalPrice: product.price * quantity,
     }
     this.context.commit('addCartItemToState', item)
     this.context.dispatch('persistState')

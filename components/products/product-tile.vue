@@ -1,17 +1,16 @@
 <template>
-  <b-col cols="12" sm="6" md="4" lg="3">
-    <h2>{{ product.name }}</h2>
-    <p>{{ product.description }}</p>
-    <div>
-      <nuxt-link
-        :to="`/products/${product.slug}`"
-        no-prefetch
-        class="btn btn-secondary"
-      >
-        Details
-      </nuxt-link>
-    </div>
-  </b-col>
+  <b-card :title="product.name">
+    <b-card-text class="product-tile__text">
+      {{ product.description }}
+    </b-card-text>
+    <nuxt-link
+      :to="`/products/${product.slug}`"
+      no-prefetch
+      class="btn btn-outline-secondary"
+    >
+      Details
+    </nuxt-link>
+  </b-card>
 </template>
 
 <script lang="ts">
@@ -21,14 +20,13 @@ import { ProductResult } from '@/types/products/product'
 @Component
 export default class ProductTile extends Vue {
   @Prop()
-  product!: ProductResult
+  product!: Partial<ProductResult>
 }
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/css/variables';
-
-h2 {
-  color: $primary;
+.product-tile__text {
+  height: 6rem;
+  overflow: hidden;
 }
 </style>

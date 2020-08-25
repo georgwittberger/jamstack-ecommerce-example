@@ -4,6 +4,9 @@
     <ClientOnly>
       <CartItemsTable />
       <div v-if="hasCartItems">
+        <p class="cart__total-price">
+          Total Price: {{ totalPrice | currency }}
+        </p>
         <b-button variant="outline-secondary" @click="clearCart">
           Clear Cart
         </b-button>
@@ -25,7 +28,11 @@ export default class CartPage extends Vue {
   private cartModule = getModule(CartModule, this.$store)
 
   get hasCartItems(): boolean {
-    return this.cartModule.cartItems.length > 0
+    return this.cartModule.cartItemsCount > 0
+  }
+
+  get totalPrice(): number {
+    return this.cartModule.cartTotalPrice
   }
 
   head() {
@@ -38,4 +45,9 @@ export default class CartPage extends Vue {
 }
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.cart__total-price {
+  font-weight: bold;
+  text-align: right;
+}
+</style>

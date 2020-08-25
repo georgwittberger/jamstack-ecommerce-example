@@ -2,11 +2,16 @@
   <div>
     <h1>All Products</h1>
     <b-row>
-      <ProductTile
+      <b-col
         v-for="product in products"
         :key="product.id"
-        :product="product"
-      />
+        cols="12"
+        sm="6"
+        md="4"
+        lg="3"
+      >
+        <ProductTile :product="product" />
+      </b-col>
     </b-row>
   </div>
 </template>

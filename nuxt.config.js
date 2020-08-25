@@ -56,6 +56,8 @@ export default {
     '@nuxt/content',
     // Doc: https://auth.nuxtjs.org/
     '@nuxtjs/auth',
+    // Doc: https://github.com/mazipan/vue-currency-filter
+    'vue-currency-filter/nuxt',
   ],
   /*
    * Axios module configuration
@@ -84,6 +86,7 @@ export default {
     componentPlugins: [
       'LayoutPlugin',
       'ButtonPlugin',
+      'CardPlugin',
       'FormPlugin',
       'FormGroupPlugin',
       'FormInputPlugin',
@@ -113,5 +116,17 @@ export default {
         refresh_token_key: 'refresh_token',
       },
     },
+  },
+  /*
+   * Currency filter configuration
+   * See https://mazipan.github.io/vue-currency-filter/#/
+   */
+  currencyFilter: {
+    symbol: '€',
+    thousandsSeparator: '.',
+    fractionCount: 2,
+    fractionSeparator: ',',
+    symbolPosition: 'back',
+    symbolSpacing: true,
   },
 }
