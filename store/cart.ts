@@ -21,8 +21,22 @@ export default class CartModule extends VuexModule {
   }
 
   @Mutation
-  removeCartItemFromState(id: string): void {
-    const itemIndex = this.cartItems.findIndex((item) => item.id === id)
+  updateCartItemQuantity({
+    cartItemId,
+    quantity,
+  }: {
+    cartItemId: string
+    quantity: number
+  }): void {
+    const item = this.cartItems.find((item) => item.id === cartItemId)
+    if (!item) return
+    item.quantity = quantity
+    this.cartItems = [...this.cartItems]
+  }
+
+  @Mutation
+  removeCartItemFromState(cartItemId: string): void {
+    const itemIndex = this.cartItems.findIndex((item) => item.id === cartItemId)
     if (itemIndex < 0) return
     const remainingCartItems = [...this.cartItems]
     remainingCartItems.splice(itemIndex, 1)
@@ -58,8 +72,16 @@ export default class CartModule extends VuexModule {
   }
 
   @Action
-  removeCartItem(id: string): void {
-    this.context.commit('removeCartItemFromState', id)
+  updateCartItem({ cartItemId, quantity }: UpdateCartItemOptions): void {
+    if (typeof quantity !== 'undefined') {
+      this.context.commit('updateCartItemQuantity', { cartItemId, quantity })
+    }
+    this.context.dispatch('persistState')
+  }
+
+  @Action
+  removeCartItem(cartItemId: string): void {
+    this.context.commit('removeCartItemFromState', cartItemId)
     this.context.dispatch('persistState')
   }
 
@@ -92,6 +114,11 @@ const cartStateStorageKey = 'cart.state'
 interface AddCartItemOptions {
   product: Product
   quantity: number
+}
+
+interface UpdateCartItemOptions {
+  cartItemId: string
+  quantity?: number
 }
 
 interface PersistentCartState {

@@ -8,19 +8,27 @@
         <th scope="col">Actions</th>
       </tr>
     </thead>
-    <tbody @click="handleCartItemAction">
+    <tbody>
       <tr v-for="cartItem in cartItems" :key="cartItem.id">
         <td>{{ cartItem.productName }}</td>
         <td>{{ cartItem.productId }}</td>
-        <td>{{ cartItem.quantity }}</td>
         <td>
-          <button
-            data-action="remove"
-            :data-cart-item-id="cartItem.id"
-            class="btn btn-sm btn-secondary"
+          <b-form-input
+            type="number"
+            number
+            size="sm"
+            :value="cartItem.quantity"
+            @update="updateCartItemQuantity(cartItem, $event)"
+          ></b-form-input>
+        </td>
+        <td>
+          <b-button
+            size="sm"
+            variant="outline-secondary"
+            @click="removeCartItem(cartItem)"
           >
             Remove
-          </button>
+          </b-button>
         </td>
       </tr>
     </tbody>
@@ -31,6 +39,7 @@
 import { Vue, Component } from 'nuxt-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import CartModule from '@/store/cart'
+import { CartItem } from '@/types/cart/cart-item'
 
 @Component
 export default class CartItemsTable extends Vue {
@@ -40,15 +49,12 @@ export default class CartItemsTable extends Vue {
     return this.cartModule.cartItems
   }
 
-  handleCartItemAction(event: Event) {
-    const element = event.target as HTMLElement
-    const action = element.dataset.action
-    if (!action) return
-    if (action === 'remove') {
-      const cartItemId = element.dataset.cartItemId
-      if (!cartItemId) return
-      this.cartModule.removeCartItem(cartItemId)
-    }
+  updateCartItemQuantity(item: CartItem, quantity: number) {
+    this.cartModule.updateCartItem({ cartItemId: item.id, quantity })
+  }
+
+  removeCartItem(item: CartItem) {
+    this.cartModule.removeCartItem(item.id)
   }
 }
 </script>

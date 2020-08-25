@@ -81,7 +81,7 @@ export default {
   bootstrapVue: {
     bootstrapCSS: false,
     bootstrapVueCSS: false,
-    componentPlugins: ['LayoutPlugin'],
+    componentPlugins: ['LayoutPlugin', 'ButtonPlugin', 'FormInputPlugin'],
     directivePlugins: [],
   },
   /*
