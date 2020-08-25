@@ -1,6 +1,7 @@
 import { Action, Module, Mutation, VuexModule } from 'vuex-module-decorators'
 import { v4 as uuid4 } from 'uuid'
 import { CartItem } from '@/types/cart/cart-item'
+import { CartConfiguration } from '@/types/cart/cart-configuration'
 import { Product } from '@/types/products/product'
 
 @Module({
@@ -10,6 +11,7 @@ import { Product } from '@/types/products/product'
 })
 export default class CartModule extends VuexModule {
   cartItems: CartItem[] = []
+  cartConfiguration: CartConfiguration = {}
 
   get cartItemsCount(): number {
     return this.cartItems.length
@@ -49,8 +51,16 @@ export default class CartModule extends VuexModule {
   }
 
   @Mutation
+  patchCartConfigurationState(
+    cartConfiguration: Partial<CartConfiguration>
+  ): void {
+    this.cartConfiguration = { ...this.cartConfiguration, ...cartConfiguration }
+  }
+
+  @Mutation
   setCartState(cartState: PersistentCartState): void {
     this.cartItems = cartState.cartItems
+    this.cartConfiguration = cartState.cartConfiguration
   }
 
   @Action
@@ -92,8 +102,17 @@ export default class CartModule extends VuexModule {
   }
 
   @Action
+  updateCartConfiguration(cartConfiguration: Partial<CartConfiguration>): void {
+    this.context.commit('patchCartConfigurationState', cartConfiguration)
+    this.context.dispatch('persistState')
+  }
+
+  @Action
   persistState(): void {
-    const cartState: PersistentCartState = { cartItems: this.cartItems }
+    const cartState: PersistentCartState = {
+      cartItems: this.cartItems,
+      cartConfiguration: this.cartConfiguration,
+    }
     window.sessionStorage.setItem(
       cartStateStorageKey,
       JSON.stringify(cartState)
@@ -123,4 +142,5 @@ interface UpdateCartItemOptions {
 
 interface PersistentCartState {
   cartItems: CartItem[]
+  cartConfiguration: CartConfiguration
 }
