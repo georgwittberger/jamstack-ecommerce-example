@@ -11,7 +11,11 @@
     </thead>
     <tbody>
       <tr v-for="cartItem in cartItems" :key="cartItem.id">
-        <td>{{ cartItem.productName }}</td>
+        <td>
+          <nuxt-link :to="`/products/${cartItem.productSlug}`">
+            {{ cartItem.productName }}
+          </nuxt-link>
+        </td>
         <td>{{ cartItem.productSku }}</td>
         <td>
           <b-form-input

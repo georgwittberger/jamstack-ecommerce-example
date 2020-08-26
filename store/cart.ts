@@ -2,7 +2,7 @@ import { Action, Module, Mutation, VuexModule } from 'vuex-module-decorators'
 import { v4 as uuid4 } from 'uuid'
 import { CartItem } from '@/types/cart/cart-item'
 import { CartConfiguration } from '@/types/cart/cart-configuration'
-import { Product } from '@/types/products/product'
+import { ProductResult } from '@/types/products/product'
 
 @Module({
   name: 'cart',
@@ -80,6 +80,7 @@ export default class CartModule extends VuexModule {
       productId: product.id,
       productSku: product.sku,
       productName: product.name,
+      productSlug: product.slug,
       quantity,
       unitPrice: product.price,
       totalPrice: product.price * quantity,
@@ -139,7 +140,7 @@ export default class CartModule extends VuexModule {
 const cartStateStorageKey = 'cart.state'
 
 interface AddCartItemOptions {
-  product: Product
+  product: ProductResult
   quantity: number
 }
 
