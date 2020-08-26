@@ -3,12 +3,13 @@ import querystring from 'querystring'
 
 let accessToken: string
 
-export async function connectToSalesforce(): Promise<void> {
+export async function authorize(): Promise<void> {
   if (!process.env.SALESFORCE_TOKEN_ENDPOINT) {
     throw new Error(
       'No token endpoint defined. Please set environment variable SALESFORCE_TOKEN_ENDPOINT'
     )
   }
+
   const authenticationRequestParams = {
     grant_type: 'password',
     client_id: process.env.SALESFORCE_CLIENT_ID,
@@ -16,13 +17,15 @@ export async function connectToSalesforce(): Promise<void> {
     username: process.env.SALESFORCE_USERNAME,
     password: process.env.SALESFORCE_PASSWORD,
   }
+
   const { data } = await axios.post(
     process.env.SALESFORCE_TOKEN_ENDPOINT,
     querystring.stringify(authenticationRequestParams),
     { headers: { Accept: 'application/json' } }
   )
+
   if (!data?.access_token) {
-    throw new Error('Authentication did not return any access token')
+    throw new Error('Authentication request did not return any access token')
   }
   accessToken = data.access_token
 }
@@ -30,19 +33,24 @@ export async function connectToSalesforce(): Promise<void> {
 export async function executeRequest(
   request: AxiosRequestConfig
 ): Promise<AxiosResponse<any>> {
+  if (!accessToken) {
+    await authorize()
+  }
+
   let response: AxiosResponse<any> | null = null
   try {
-    response = await performAuthorizedRequest(request)
+    response = await performAuthorizedRequest(request, accessToken)
   } catch (error) {
     if (error.response?.status === 401) {
-      await connectToSalesforce()
+      await authorize()
     } else {
       throw new Error(`Salesforce API request failed: ${error.message}`)
     }
   }
+
   if (!response) {
     try {
-      response = await performAuthorizedRequest(request)
+      response = await performAuthorizedRequest(request, accessToken)
     } catch (error) {
       throw new Error(
         `Retry of Salesforce API request failed: ${error.message}`
@@ -53,7 +61,8 @@ export async function executeRequest(
 }
 
 function performAuthorizedRequest(
-  request: AxiosRequestConfig
+  request: AxiosRequestConfig,
+  accessToken: string
 ): Promise<AxiosResponse<any>> {
   const headers: any = request.headers || {}
   headers.Authorization = `Bearer ${accessToken}`

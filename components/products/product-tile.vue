@@ -25,6 +25,9 @@ export default class ProductTile extends Vue {
 </script>
 
 <style lang="scss" scoped>
+.card-title {
+  font-size: 1.2rem;
+}
 .product-tile__text {
   height: 6rem;
   overflow: hidden;

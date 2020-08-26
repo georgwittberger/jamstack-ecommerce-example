@@ -1,16 +1,27 @@
 <template>
-  <div v-if="product">
-    <h1>{{ product.name }}</h1>
-    <p>Product Number: {{ product.sku }}</p>
-    <p>{{ product.description }}</p>
-    <p>{{ product.price | currency }}</p>
-    <div>
-      <b-form-input type="number" number v-model="quantity"></b-form-input>
-      <b-button variant="primary" @click="addProductToCart">
-        Add to Cart
-      </b-button>
-    </div>
-  </div>
+  <b-row v-if="product">
+    <b-col cols="12" md="8">
+      <h1>{{ product.name }}</h1>
+      <p>Product Number: {{ product.sku }}</p>
+      <p>{{ product.description }}</p>
+      <p>{{ product.price | currency }}</p>
+    </b-col>
+    <b-col cols="12" md="4">
+      <b-form>
+        <b-form-group label="Quantity" label-for="quantity">
+          <b-form-input
+            id="quantity"
+            type="number"
+            number
+            v-model="quantity"
+          ></b-form-input>
+        </b-form-group>
+        <b-button variant="primary" @click="addProductToCart">
+          Add to Cart
+        </b-button>
+      </b-form>
+    </b-col>
+  </b-row>
 </template>
 
 <script lang="ts">
