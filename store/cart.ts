@@ -122,15 +122,12 @@ export default class CartModule extends VuexModule {
       cartItems: this.cartItems,
       cartConfiguration: this.cartConfiguration,
     }
-    window.sessionStorage.setItem(
-      cartStateStorageKey,
-      JSON.stringify(cartState)
-    )
+    window.localStorage.setItem(cartStateStorageKey, JSON.stringify(cartState))
   }
 
   @Action
   restoreState(): void {
-    const cartStateString = window.sessionStorage.getItem(cartStateStorageKey)
+    const cartStateString = window.localStorage.getItem(cartStateStorageKey)
     if (!cartStateString) return
     const cartState: PersistentCartState = JSON.parse(cartStateString)
     this.context.commit('setCartState', cartState)
