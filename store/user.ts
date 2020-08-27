@@ -1,6 +1,6 @@
 import { Action, Module, Mutation, VuexModule } from 'vuex-module-decorators'
 import { $axios } from '@/plugins/global-axios'
-import { CompanyInfo } from '@/types/user/company-info'
+import { ContactInfo } from '@/types/user/contact-info'
 
 @Module({
   name: 'user',
@@ -8,20 +8,20 @@ import { CompanyInfo } from '@/types/user/company-info'
   namespaced: true,
 })
 export default class UserModule extends VuexModule {
-  companyInfo: CompanyInfo | null = null
+  contactInfo: ContactInfo | null = null
 
   @Mutation
-  addCompanyInfoToState(companyInfo: CompanyInfo): void {
-    this.companyInfo = companyInfo
+  addContactInfoToState(contactInfo: ContactInfo): void {
+    this.contactInfo = contactInfo
   }
 
   @Action
-  async getCompanyInfo(): Promise<CompanyInfo> {
-    if (this.companyInfo) {
-      return this.companyInfo
+  async getContactInfo(): Promise<ContactInfo> {
+    if (this.contactInfo) {
+      return this.contactInfo
     }
-    const companyInfo: CompanyInfo = await $axios.$get('/companyinfo')
-    this.context.commit('addCompanyInfoToState', companyInfo)
-    return companyInfo
+    const contactInfo: ContactInfo = await $axios.$get('/contactinfo')
+    this.context.commit('addContactInfoToState', contactInfo)
+    return contactInfo
   }
 }

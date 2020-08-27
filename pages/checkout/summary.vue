@@ -6,25 +6,25 @@
     <p>Contact Person: {{ $auth.user.name }}</p>
     <p>E-Mail Address: {{ $auth.user.email }}</p>
     <h2>Shipping and Billing</h2>
-    <b-row v-if="companyInfo">
+    <b-row v-if="contactInfo">
       <b-col cols="12" md="6">
         <p>The order will be shipped to the following address.</p>
         <p>
-          {{ companyInfo.name }}<br />
-          {{ companyInfo.billingAddress.street }}<br />
-          {{ companyInfo.billingAddress.postalCode }}
-          {{ companyInfo.billingAddress.city }}<br />
-          {{ companyInfo.billingAddress.country }}
+          {{ contactInfo.company.name }}<br />
+          {{ contactInfo.company.billingAddress.street }}<br />
+          {{ contactInfo.company.billingAddress.postalCode }}
+          {{ contactInfo.company.billingAddress.city }}<br />
+          {{ contactInfo.company.billingAddress.country }}
         </p>
       </b-col>
       <b-col cols="12" md="6">
         <p>The invoice for the order will be sent to the following address.</p>
         <p>
-          {{ companyInfo.name }}<br />
-          {{ companyInfo.billingAddress.street }}<br />
-          {{ companyInfo.billingAddress.postalCode }}
-          {{ companyInfo.billingAddress.city }}<br />
-          {{ companyInfo.billingAddress.country }}
+          {{ contactInfo.company.name }}<br />
+          {{ contactInfo.company.billingAddress.street }}<br />
+          {{ contactInfo.company.billingAddress.postalCode }}
+          {{ contactInfo.company.billingAddress.city }}<br />
+          {{ contactInfo.company.billingAddress.country }}
         </p>
       </b-col>
     </b-row>
@@ -50,13 +50,13 @@ import { Vue, Component } from 'nuxt-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import CartModule from '@/store/cart'
 import UserModule from '@/store/user'
-import { CompanyInfo } from '@/types/user/company-info'
+import { ContactInfo } from '@/types/user/contact-info'
 
 @Component({
   middleware: 'auth',
 })
 export default class CheckoutSummaryPage extends Vue {
-  companyInfo: CompanyInfo | null = null
+  contactInfo: ContactInfo | null = null
   private cartModule = getModule(CartModule, this.$store)
   private userModule = getModule(UserModule, this.$store)
 
@@ -73,10 +73,17 @@ export default class CheckoutSummaryPage extends Vue {
   }
 
   async created() {
-    this.companyInfo = await this.userModule.getCompanyInfo()
+    this.contactInfo = await this.userModule.getContactInfo()
   }
 
-  placeOrder() {}
+  async placeOrder() {
+    try {
+      await this.cartModule.placeOrder()
+      this.$router.push('/checkout/confirmation')
+    } catch (error) {
+      console.error('Error transmitting order', error)
+    }
+  }
 }
 </script>
 

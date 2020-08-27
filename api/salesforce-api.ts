@@ -81,3 +81,53 @@ export async function executeSoqlQuery(soqlQuery: string): Promise<any> {
   const { data } = await executeRequest(request)
   return data
 }
+
+export async function insertOrder(order: any, orderItems: any[]): Promise<any> {
+  const request: AxiosRequestConfig = {
+    url: `${process.env.SALESFORCE_INSTANCE_URL}/services/data/v${process.env.SALESFORCE_API_VERSION}/commerce/sale/order`,
+    method: 'post',
+    headers: { Accept: 'application/json' },
+    data: {
+      order: [
+        {
+          attributes: {
+            type: 'Order',
+          },
+          ...order,
+          OrderItems: {
+            records: [
+              ...orderItems.map((orderItem) => ({
+                attributes: {
+                  type: 'OrderItem',
+                },
+                ...orderItem,
+              })),
+            ],
+          },
+        },
+      ],
+    },
+  }
+  const { data } = await executeRequest(request)
+  if (!data.done) {
+    throw new Error('Insert of order failed')
+  }
+  return data
+}
+
+export async function getRecordById(
+  object: string,
+  id: string,
+  fields: string[]
+): Promise<any> {
+  const request: AxiosRequestConfig = {
+    url: `${process.env.SALESFORCE_INSTANCE_URL}/services/data/v${process.env.SALESFORCE_API_VERSION}/sobjects/${object}/${id}`,
+    method: 'get',
+    params: {
+      fields: fields.join(','),
+    },
+    headers: { Accept: 'application/json' },
+  }
+  const { data } = await executeRequest(request)
+  return data
+}

@@ -1,9 +1,10 @@
 <template>
   <div>
     <h1>Login</h1>
+    <p>Logging in enables you to access personal areas and to place orders.</p>
     <div>
       <button @click="loginWithOauth2" class="btn btn-primary">
-        Continue to login
+        Continue to Login
       </button>
     </div>
   </div>

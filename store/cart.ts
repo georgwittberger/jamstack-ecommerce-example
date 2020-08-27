@@ -1,7 +1,9 @@
 import { Action, Module, Mutation, VuexModule } from 'vuex-module-decorators'
 import { v4 as uuid4 } from 'uuid'
+import { $axios } from '@/plugins/global-axios'
 import { CartItem } from '@/types/cart/cart-item'
 import { CartConfiguration } from '@/types/cart/cart-configuration'
+import { Order } from '@/types/cart/order'
 import { ProductResult } from '@/types/products/product'
 
 @Module({
@@ -12,6 +14,7 @@ import { ProductResult } from '@/types/products/product'
 export default class CartModule extends VuexModule {
   cartItems: CartItem[] = []
   cartConfiguration: CartConfiguration = {}
+  recentOrderNumber: string = ''
 
   get cartItemsCount(): number {
     return this.cartItems.length
@@ -63,9 +66,19 @@ export default class CartModule extends VuexModule {
   }
 
   @Mutation
+  resetCartConfigurationState(): void {
+    this.cartConfiguration = {}
+  }
+
+  @Mutation
   setCartState(cartState: PersistentCartState): void {
     this.cartItems = cartState.cartItems
     this.cartConfiguration = cartState.cartConfiguration
+  }
+
+  @Mutation
+  setRecentOrderNumber(orderNumber: string): void {
+    this.recentOrderNumber = orderNumber
   }
 
   @Action
@@ -114,6 +127,22 @@ export default class CartModule extends VuexModule {
   updateCartConfiguration(cartConfiguration: Partial<CartConfiguration>): void {
     this.context.commit('patchCartConfigurationState', cartConfiguration)
     this.context.dispatch('persistState')
+  }
+
+  @Action
+  async placeOrder(): Promise<Order> {
+    const order: Order = await $axios.$post('/orders', {
+      configuration: this.cartConfiguration,
+      orderItems: this.cartItems.map((cartItem) => ({
+        productId: cartItem.productId,
+        quantity: cartItem.quantity,
+      })),
+    })
+    this.context.commit('setRecentOrderNumber', order.number)
+    this.context.commit('resetCartConfigurationState')
+    this.context.commit('removeAllCartItemsFromState')
+    this.context.dispatch('persistState')
+    return order
   }
 
   @Action

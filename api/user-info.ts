@@ -5,10 +5,6 @@ export function createUserInfoRouter(): Router {
   const router = new Router()
   router.get('/', async (ctx) => {
     const authorization = ctx.request.get('Authorization')
-    if (!authorization) {
-      ctx.response.status = 401
-      ctx.response.body = { status: 401, message: 'Missing authorization' }
-    }
     const userInfo = await getUserInfo(authorization)
     ctx.response.status = 200
     ctx.response.body = userInfo
