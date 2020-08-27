@@ -11,7 +11,7 @@
         lg="3"
         class="product-list__tile"
       >
-        <ProductTile :product="product" />
+        <product-tile :product="product" />
       </b-col>
     </b-row>
   </div>
@@ -41,8 +41,6 @@ export default class ProductListPage extends Vue {
 
 <style lang="scss" scoped>
 @import '@/assets/css/variables';
-@import 'bootstrap/scss/functions';
-@import 'bootstrap/scss/variables';
 
 .product-list__tile {
   margin-bottom: $grid-gutter-width;

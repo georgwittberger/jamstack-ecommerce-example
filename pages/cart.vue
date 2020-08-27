@@ -1,8 +1,8 @@
 <template>
   <div>
     <h1>Cart</h1>
-    <ClientOnly>
-      <CartItemsTable />
+    <client-only>
+      <cart-items-table />
       <div v-if="hasCartItems">
         <p class="cart__total-price">
           Total Price: {{ totalPrice | currency }}
@@ -14,7 +14,7 @@
           Continue to Checkout
         </nuxt-link>
       </div>
-    </ClientOnly>
+    </client-only>
   </div>
 </template>
 

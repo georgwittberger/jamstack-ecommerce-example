@@ -1,9 +1,9 @@
 <template>
   <b-container>
-    <MainNavigation />
-    <ClientOnly>
-      <MiniCart />
-    </ClientOnly>
+    <main-navigation />
+    <client-only>
+      <mini-cart />
+    </client-only>
     <Nuxt />
   </b-container>
 </template>
