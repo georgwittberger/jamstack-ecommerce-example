@@ -1,5 +1,5 @@
 <template>
-  <b-navbar toggleable="lg" variant="light">
+  <b-navbar toggleable="lg" variant="primary" type="dark">
     <b-container>
       <b-navbar-brand to="/">DemoTools</b-navbar-brand>
       <b-navbar-toggle target="main-nav-collapse"></b-navbar-toggle>

@@ -28,16 +28,30 @@
         </p>
       </b-col>
     </b-row>
-    <h2>Payment</h2>
-    <p>The order will be paid via invoice.</p>
-    <div v-if="hasAdditionalInformation">
-      <h2>Additional Information</h2>
-      <p v-if="orderReferenceNumber">
-        Order Reference Number: {{ orderReferenceNumber }}
-      </p>
-    </div>
-    <div>
-      <p>By placing an order you agree to our terms and conditions.</p>
+    <b-row>
+      <b-col cols="12" md="6">
+        <h2>Payment</h2>
+        <p>The order will be paid via invoice.</p>
+      </b-col>
+      <b-col cols="12" md="6" v-if="hasAdditionalInformation">
+        <h2>Additional Information</h2>
+        <p v-if="orderReferenceNumber">
+          Order Reference Number: {{ orderReferenceNumber }}
+        </p>
+      </b-col>
+    </b-row>
+    <h2 class="checkout-summary__cart-heading">Cart</h2>
+    <cart-items-table read-only />
+    <p class="checkout-summary__total-price">
+      Total Price: {{ totalPrice | currency }}
+    </p>
+    <p class="checkout-summary__legal-text">
+      By placing an order you agree to our terms and conditions.
+    </p>
+    <div class="checkout-summary__buttons">
+      <b-button variant="outline-secondary" to="/checkout/configuration">
+        Back to Configuration
+      </b-button>
       <b-button variant="primary" @click="placeOrder">
         Place Order
       </b-button>
@@ -68,6 +82,10 @@ export default class CheckoutSummaryPage extends Vue {
     return this.cartModule.cartConfiguration.orderReferenceNumber || null
   }
 
+  get totalPrice(): number {
+    return this.cartModule.cartTotalPrice
+  }
+
   head() {
     return { title: 'Checkout Summary' }
   }
@@ -87,4 +105,19 @@ export default class CheckoutSummaryPage extends Vue {
 }
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.checkout-summary__cart-heading {
+  margin-bottom: 1rem;
+}
+.checkout-summary__total-price {
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: right;
+}
+.checkout-summary__legal-text {
+  text-align: right;
+}
+.checkout-summary__buttons {
+  text-align: right;
+}
+</style>

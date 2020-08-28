@@ -1,8 +1,12 @@
 <template>
   <div>
     <h1>Checkout Confirmation</h1>
-    <p>Your order has been placed successfully.</p>
-    <p>Order Number: {{ orderNumber }}</p>
+    <p class="checkout-confirmation__message">
+      Your order has been placed successfully.
+    </p>
+    <p class="checkout-confirmation__order-number">
+      Order Number: {{ orderNumber }}
+    </p>
     <b-button variant="primary" @click="navigateToHomePage">
       Back to Home Page
     </b-button>
@@ -40,4 +44,15 @@ export default class CheckoutConfirmationPage extends Vue {
 }
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+@import '@/assets/css/variables';
+
+.checkout-confirmation__message {
+  color: $success;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+.checkout-confirmation__order-number {
+  margin-bottom: 2rem;
+}
+</style>

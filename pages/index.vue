@@ -1,13 +1,14 @@
 <template>
-  <div>
-    <h1>JAMStack E-Commerce</h1>
-    <p>This is a showcase of an e-commerce website built using the JAMStack.</p>
-    <div>
-      <nuxt-link to="/products" class="btn btn-primary">
-        Browse all products
-      </nuxt-link>
-    </div>
-  </div>
+  <b-jumbotron
+    header="JAMStack E-Commerce"
+    lead="Showcase of an e-commerce website built with the JAMStack"
+  >
+    <p>
+      Pre-generated static HTML files and a lightweight API server for a blazing
+      fast shopping experience.
+    </p>
+    <b-button variant="primary" to="/products">Browse All Products</b-button>
+  </b-jumbotron>
 </template>
 
 <script lang="ts">

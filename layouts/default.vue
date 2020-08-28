@@ -1,7 +1,7 @@
 <template>
   <div>
     <main-navigation />
-    <b-container>
+    <b-container class="default-layout__container">
       <Nuxt />
     </b-container>
   </div>
@@ -14,4 +14,9 @@ import { Vue, Component } from 'nuxt-property-decorator'
 export default class DefaultLayout extends Vue {}
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.default-layout__container {
+  margin-top: 2rem;
+  margin-bottom: 3rem;
+}
+</style>

@@ -1,55 +1,63 @@
 <template>
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">Product Name</th>
-        <th scope="col">Product Number</th>
-        <th scope="col">Quantity</th>
-        <th scope="col">Total Price</th>
-        <th scope="col">Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="cartItem in cartItems" :key="cartItem.id">
-        <td>
-          <nuxt-link :to="`/products/${cartItem.productSlug}`">
-            {{ cartItem.productName }}
-          </nuxt-link>
-        </td>
-        <td>{{ cartItem.productSku }}</td>
-        <td>
-          <b-form-input
-            type="number"
-            number
-            size="sm"
-            :value="cartItem.quantity"
-            @update="updateCartItemQuantity(cartItem, $event)"
-          ></b-form-input>
-        </td>
-        <td>{{ cartItem.totalPrice | currency }}</td>
-        <td>
-          <b-button
-            size="sm"
-            variant="outline-secondary"
-            @click="removeCartItem(cartItem)"
-          >
-            Remove
-          </b-button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <b-table :fields="tableColumns" :items="cartItems" responsive="sm" hover>
+    <template v-slot:cell(productName)="data">
+      <nuxt-link :to="`/products/${data.item.productSlug}`" v-if="!readOnly">
+        {{ data.item.productName }}
+      </nuxt-link>
+      <span v-if="readOnly">{{ data.item.productName }}</span>
+    </template>
+    <template v-slot:cell(productNumber)="data">
+      {{ data.item.productSku }}
+    </template>
+    <template v-slot:cell(quantity)="data">
+      <b-form-input
+        type="number"
+        number
+        size="sm"
+        :value="data.item.quantity"
+        @update="updateCartItemQuantity(data.item, $event)"
+        v-if="!readOnly"
+      ></b-form-input>
+      <span v-if="readOnly">{{ data.item.quantity }}</span>
+    </template>
+    <template v-slot:cell(totalPrice)="data">
+      {{ data.item.totalPrice | currency }}
+    </template>
+    <template v-slot:cell(actions)="data">
+      <b-button
+        size="sm"
+        variant="outline-secondary"
+        @click="removeCartItem(data.item)"
+      >
+        Remove
+      </b-button>
+    </template>
+  </b-table>
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'nuxt-property-decorator'
+import { Vue, Component, Prop } from 'nuxt-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import CartModule from '@/store/cart'
 import { CartItem } from '@/types/cart/cart-item'
 
 @Component
 export default class CartItemsTable extends Vue {
+  @Prop(Boolean) readOnly!: boolean
   private cartModule = getModule(CartModule, this.$store)
+
+  get tableColumns() {
+    const tableColumns = [
+      { key: 'productName', label: 'Product Name' },
+      { key: 'productNumber', label: 'Product Number' },
+      { key: 'quantity', label: 'Quantity' },
+      { key: 'totalPrice', label: 'Total Price' },
+    ]
+    if (!this.readOnly) {
+      tableColumns.push({ key: 'actions', label: 'Actions' })
+    }
+    return tableColumns
+  }
 
   get cartItems() {
     return this.cartModule.cartItems

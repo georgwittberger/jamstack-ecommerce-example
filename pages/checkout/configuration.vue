@@ -28,27 +28,34 @@
         </p>
       </b-col>
     </b-row>
-    <h2>Payment</h2>
-    <p>The order will be paid via invoice.</p>
-    <h2>Additional Information</h2>
-    <b-form>
-      <b-form-group
-        label="Order Reference Number"
-        label-for="orderReferenceNumber"
-      >
-        <b-form-input
-          id="orderReferenceNumber"
-          aria-describedby="orderReferenceNumberInvalid"
-          debounce="300"
-          v-model="orderReferenceNumber"
-          :state="orderReferenceNumberState"
-        ></b-form-input>
-        <b-form-invalid-feedback id="orderReferenceNumberInvalid">
-          The value can be at most 80 characters.
-        </b-form-invalid-feedback>
-      </b-form-group>
-    </b-form>
-    <div>
+    <b-row>
+      <b-col cols="12" md="6">
+        <h2>Payment</h2>
+        <p>The order will be paid via invoice.</p>
+      </b-col>
+      <b-col cols="12" md="6">
+        <h2>Additional Information</h2>
+        <b-form>
+          <b-form-group
+            label="Order Reference Number"
+            label-for="orderReferenceNumber"
+          >
+            <b-form-input
+              id="orderReferenceNumber"
+              aria-describedby="orderReferenceNumberInvalid"
+              debounce="300"
+              v-model="orderReferenceNumber"
+              :state="orderReferenceNumberState"
+            ></b-form-input>
+            <b-form-invalid-feedback id="orderReferenceNumberInvalid">
+              The value can be at most 80 characters.
+            </b-form-invalid-feedback>
+          </b-form-group>
+        </b-form>
+      </b-col>
+    </b-row>
+    <div class="checkout-configuration__buttons">
+      <b-button variant="outline-secondary" to="/cart">Back to Cart</b-button>
       <b-button
         variant="primary"
         :disabled="isConfigurationInvalid"
@@ -107,4 +114,9 @@ export default class CheckoutConfigurationPage extends Vue {
 }
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.checkout-configuration__buttons {
+  margin-top: 2rem;
+  text-align: right;
+}
+</style>

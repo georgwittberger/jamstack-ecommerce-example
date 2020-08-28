@@ -1,27 +1,33 @@
 <template>
   <div>
     <h1>My User Profile</h1>
-    <h2>Personal Information</h2>
-    <p>Name: {{ $auth.user.name }}</p>
-    <p>E-Mail Address: {{ $auth.user.email }}</p>
-    <p>Phone Number: {{ $auth.user.phone_number }}</p>
-    <p v-if="$auth.user.address">
-      Local Address:
-      {{ $auth.user.address.street_address }},
-      {{ $auth.user.address.postal_code }} {{ $auth.user.address.locality }},
-      {{ $auth.user.address.country }}
-    </p>
-    <div v-if="contactInfo">
-      <h2>Company Information</h2>
-      <p>Name: {{ contactInfo.company.name }}</p>
-      <p>Account Number: {{ contactInfo.company.number }}</p>
-      <p>
-        Billing Address: {{ contactInfo.company.billingAddress.street }},
-        {{ contactInfo.company.billingAddress.postalCode }}
-        {{ contactInfo.company.billingAddress.city }},
-        {{ contactInfo.company.billingAddress.country }}
-      </p>
-    </div>
+    <b-row>
+      <b-col cols="12" md="6">
+        <h2>Personal Information</h2>
+        <p>Name: {{ $auth.user.name }}</p>
+        <p>E-Mail Address: {{ $auth.user.email }}</p>
+        <p>Phone Number: {{ $auth.user.phone_number }}</p>
+        <p v-if="$auth.user.address">
+          Local Address:<br />
+          {{ $auth.user.address.street_address }}<br />
+          {{ $auth.user.address.postal_code }}
+          {{ $auth.user.address.locality }}<br />
+          {{ $auth.user.address.country }}
+        </p>
+      </b-col>
+      <b-col cols="12" md="6" v-if="contactInfo">
+        <h2>Company Information</h2>
+        <p>Name: {{ contactInfo.company.name }}</p>
+        <p>Account Number: {{ contactInfo.company.number }}</p>
+        <p>
+          Billing Address:<br />
+          {{ contactInfo.company.billingAddress.street }}<br />
+          {{ contactInfo.company.billingAddress.postalCode }}
+          {{ contactInfo.company.billingAddress.city }}<br />
+          {{ contactInfo.company.billingAddress.country }}
+        </p>
+      </b-col>
+    </b-row>
   </div>
 </template>
 
