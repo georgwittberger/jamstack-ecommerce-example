@@ -1,3 +1,3 @@
-export interface CartConfiguration {
+export type CartConfiguration = {
   orderReferenceNumber?: string
 }

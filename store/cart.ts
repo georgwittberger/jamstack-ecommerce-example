@@ -165,17 +165,17 @@ export default class CartModule extends VuexModule {
 
 const cartStateStorageKey = 'cart.state'
 
-interface AddCartItemOptions {
+type AddCartItemOptions = {
   product: ProductResult
   quantity: number
 }
 
-interface UpdateCartItemOptions {
+type UpdateCartItemOptions = {
   cartItemId: string
   quantity?: number
 }
 
-interface PersistentCartState {
+type PersistentCartState = {
   cartItems: CartItem[]
   cartConfiguration: CartConfiguration
 }

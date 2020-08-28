@@ -1,5 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
 import querystring from 'querystring'
+import { InsertOrderResult, SoqlQueryResult } from './types'
 
 let accessToken: string
 
@@ -69,7 +70,9 @@ function performAuthorizedRequest(
   return axios.request(request)
 }
 
-export async function executeSoqlQuery(soqlQuery: string): Promise<any> {
+export async function executeSoqlQuery<T>(
+  soqlQuery: string
+): Promise<SoqlQueryResult<T>> {
   const request: AxiosRequestConfig = {
     url: `${process.env.SALESFORCE_INSTANCE_URL}/services/data/v${process.env.SALESFORCE_API_VERSION}/query`,
     method: 'get',
@@ -82,7 +85,10 @@ export async function executeSoqlQuery(soqlQuery: string): Promise<any> {
   return data
 }
 
-export async function insertOrder(order: any, orderItems: any[]): Promise<any> {
+export async function insertOrder(
+  order: any,
+  orderItems: any[]
+): Promise<InsertOrderResult> {
   const request: AxiosRequestConfig = {
     url: `${process.env.SALESFORCE_INSTANCE_URL}/services/data/v${process.env.SALESFORCE_API_VERSION}/commerce/sale/order`,
     method: 'post',
@@ -115,11 +121,11 @@ export async function insertOrder(order: any, orderItems: any[]): Promise<any> {
   return data
 }
 
-export async function getRecordById(
+export async function getRecordById<T>(
   object: string,
   id: string,
   fields: string[]
-): Promise<any> {
+): Promise<T> {
   const request: AxiosRequestConfig = {
     url: `${process.env.SALESFORCE_INSTANCE_URL}/services/data/v${process.env.SALESFORCE_API_VERSION}/sobjects/${object}/${id}`,
     method: 'get',

@@ -1,12 +1,12 @@
 import 'dotenv/config'
-import Koa from 'koa'
-import Router from '@koa/router'
 import cors from '@koa/cors'
+import Router from '@koa/router'
+import Koa from 'koa'
 import bodyParser from 'koa-bodyparser'
 import authorizationFilter from './authorization-filter'
-import { createUserInfoRouter } from './user-info'
-import { createContactInfoRouter } from './contact-info'
-import { createOrdersRouter } from './orders'
+import { createContactInfoRouter } from './contact-info/router'
+import { createOrdersRouter } from './orders/router'
+import { createUserInfoRouter } from './user-info/router'
 
 const port = process.env.PORT || 3000
 const app = new Koa()

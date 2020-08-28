@@ -7,12 +7,12 @@ export type ContactInfo = {
   company: {
     id: string
     name: string
-    number: string
+    number?: string
     billingAddress: {
-      street: string
-      postalCode: string
-      city: string
-      country: string
+      street?: string
+      postalCode?: string
+      city?: string
+      country?: string
     }
   }
 }

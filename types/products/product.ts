@@ -1,11 +1,11 @@
 import { NuxtContentResult } from '@/types/nuxt-content-result'
 
-export interface ProductResult extends Product, NuxtContentResult {}
-
-export interface Product {
+export type Product = {
   id: string
   sku: string
   name: string
   description: string
   price: number
 }
+
+export type ProductResult = Product & NuxtContentResult

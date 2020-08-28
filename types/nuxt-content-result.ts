@@ -1,4 +1,4 @@
-export interface NuxtContentResult {
+export type NuxtContentResult = {
   dir: string
   extension: string
   path: string

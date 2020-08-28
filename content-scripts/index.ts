@@ -67,7 +67,7 @@ function getProductSlug(product: Product): string {
   return product.name.replace(/[^\w]|_/g, '-').toLowerCase()
 }
 
-interface Product {
+type Product = {
   id: string
   sku: string
   name: string

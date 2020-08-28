@@ -1,14 +1,12 @@
 import { NuxtContentResult } from '@/types/nuxt-content-result'
 
-export interface MainNavigationResult
-  extends MainNavigation,
-    NuxtContentResult {}
-
-interface MainNavigation {
+type MainNavigation = {
   entries: MainNavigationEntry[]
 }
 
-interface MainNavigationEntry {
+type MainNavigationEntry = {
   name: string
   path: string
 }
+
+export type MainNavigationResult = MainNavigation & NuxtContentResult

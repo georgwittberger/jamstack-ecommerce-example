@@ -1,3 +1,3 @@
-export interface Order {
+export type Order = {
   number: string
 }
