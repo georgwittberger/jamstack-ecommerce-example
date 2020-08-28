@@ -3,7 +3,9 @@
     <h1>Checkout Confirmation</h1>
     <p>Your order has been placed successfully.</p>
     <p>Order Number: {{ orderNumber }}</p>
-    <nuxt-link to="/" class="btn btn-primary">Back to Home Page</nuxt-link>
+    <b-button variant="primary" @click="navigateToHomePage">
+      Back to Home Page
+    </b-button>
   </div>
 </template>
 
@@ -28,8 +30,12 @@ export default class CheckoutConfirmationPage extends Vue {
 
   created() {
     if (!this.orderNumber) {
-      this.$router.replace('/')
+      this.navigateToHomePage()
     }
+  }
+
+  navigateToHomePage() {
+    this.$router.replace('/')
   }
 }
 </script>
