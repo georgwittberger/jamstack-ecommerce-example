@@ -33,7 +33,7 @@ import { MainNavigationResult } from '@/types/header/main-navigation'
 export default class MainNavigation extends Vue {
   mainNavigationContent: MainNavigationResult | null = null
 
-  async created() {
+  async fetch() {
     this.mainNavigationContent = await this.$content('main-navigation').fetch()
   }
 }
