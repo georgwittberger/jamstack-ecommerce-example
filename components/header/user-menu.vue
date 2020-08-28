@@ -1,9 +1,11 @@
 <template>
-  <ul>
-    <li>Logged in as: {{ $auth.user.name }}</li>
-    <li><nuxt-link to="/user/profile">My User Profile</nuxt-link></li>
-    <li><a @click="logout" href="#">Logout</a></li>
-  </ul>
+  <b-nav-item-dropdown right>
+    <template v-slot:button-content>
+      {{ $auth.user.name }}
+    </template>
+    <b-dropdown-item to="/user/profile">My User Profile</b-dropdown-item>
+    <b-dropdown-item href="#" @click="logout">Logout</b-dropdown-item>
+  </b-nav-item-dropdown>
 </template>
 
 <script lang="ts">

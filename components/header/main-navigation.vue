@@ -1,15 +1,28 @@
 <template>
-  <div>
-    <ul v-if="mainNavigationContent">
-      <li v-for="entry in mainNavigationContent.entries" :key="entry.name">
-        <nuxt-link :to="entry.path">{{ entry.name }}</nuxt-link>
-      </li>
-    </ul>
-    <client-only>
-      <login-button v-if="!$auth.loggedIn" />
-      <user-menu v-if="$auth.loggedIn" />
-    </client-only>
-  </div>
+  <b-navbar toggleable="lg" variant="light">
+    <b-container>
+      <b-navbar-brand to="/">DemoTools</b-navbar-brand>
+      <b-navbar-toggle target="main-nav-collapse"></b-navbar-toggle>
+      <b-collapse id="main-nav-collapse" is-nav>
+        <b-navbar-nav v-if="mainNavigationContent">
+          <b-nav-item
+            v-for="entry in mainNavigationContent.entries"
+            :key="entry.name"
+            :to="entry.path"
+          >
+            {{ entry.name }}
+          </b-nav-item>
+        </b-navbar-nav>
+        <client-only>
+          <b-navbar-nav class="ml-auto">
+            <mini-cart />
+            <login-button v-if="!$auth.loggedIn" />
+            <user-menu v-if="$auth.loggedIn" />
+          </b-navbar-nav>
+        </client-only>
+      </b-collapse>
+    </b-container>
+  </b-navbar>
 </template>
 
 <script lang="ts">

@@ -1,11 +1,10 @@
 <template>
-  <b-container>
+  <div>
     <main-navigation />
-    <client-only>
-      <mini-cart />
-    </client-only>
-    <Nuxt />
-  </b-container>
+    <b-container>
+      <Nuxt />
+    </b-container>
+  </div>
 </template>
 
 <script lang="ts">

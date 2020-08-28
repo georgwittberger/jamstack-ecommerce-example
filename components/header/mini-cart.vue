@@ -1,10 +1,8 @@
 <template>
-  <div>
-    <nuxt-link to="/cart">Cart</nuxt-link>
-    <span v-if="cartItemsCount > 0" class="mini-cart__count">
-      {{ cartItemsCount }}
-    </span>
-  </div>
+  <b-nav-item to="/cart">
+    Cart
+    <span v-if="cartItemsCount > 0"> ({{ cartItemsCount }}) </span>
+  </b-nav-item>
 </template>
 
 <script lang="ts">
@@ -22,11 +20,4 @@ export default class MiniCart extends Vue {
 }
 </script>
 
-<style lang="scss">
-@import '@/assets/css/variables';
-
-.mini-cart__count {
-  color: $primary;
-  font-weight: bold;
-}
-</style>
+<style></style>
