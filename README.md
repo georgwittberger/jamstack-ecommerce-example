@@ -1,6 +1,5 @@
 <p align="center">
-  <img src="docs/jamstack-ecommerce-logo.png" alt="JAMStack E-Commerce Logo"
-    width="600" height="800" style="width:100%;max-width:600px;height:auto;" />
+  <img src="docs/jamstack-ecommerce-logo.png" alt="JAMStack E-Commerce Logo" style="max-width:100%;" />
 </p>
 
 # JAMStack E-Commerce Example
@@ -56,8 +55,7 @@ storage for products and orders as well as for user authentication.
 ## JAMStack Architecture
 
 <p>
-  <img src="docs/jamstack-architecture.svg" alt="JAMStack Architecture"
-    width="800" height="600" style="width:100%;height:auto;" />
+  <img src="docs/jamstack-architecture.svg" alt="JAMStack Architecture" style="max-width:100%;" />
 </p>
 
 Since the pages accessed by the website visitors are not generated dynamically
