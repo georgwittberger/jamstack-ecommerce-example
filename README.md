@@ -1,14 +1,14 @@
 <p style="text-align:center;">
-  <img src="https://dummyimage.com/600x400/666/fff" alt="Dummy"
-    width="600" height="400" style="max-width:600px;height:auto;" />
+  <img src="docs/jamstack-ecommerce-logo.png" alt="JAMStack E-Commerce Logo"
+    width="600" height="800" style="width:100%;max-width:600px;height:auto;" />
 </p>
 
 # JAMStack E-Commerce Example
 
-This is a showcase of an e-commerce website built with the JAMStack using
-[Nuxt.js](https://nuxtjs.org) as the web application framework and
-[Salesforce](https://www.salesforce.com/) as the data storage for products and
-orders as well as for user authentication.
+This is a showcase of an e-commerce website built with the
+[JAMStack](https://jamstack.org/) using [Nuxt.js](https://nuxtjs.org) as the web
+application framework and [Salesforce](https://www.salesforce.com/) as the data
+storage for products and orders as well as for user authentication.
 
 - [JAMStack E-Commerce Example](#jamstack-e-commerce-example)
   - [Example Features](#example-features)
@@ -34,25 +34,30 @@ orders as well as for user authentication.
 - **Pre-fetched Product Content:** Content for products is pre-fetched from
   Salesforce using a dedicated Node.js script. This script should be executed
   before the static HTML files are generated. It fetches product data via the
-  Salesforce REST API and stores the content locally as JSON files. They will be
-  used to generate the pages and are also included in the Git repository.
+  Salesforce REST API and stores the content locally as JSON files. They can be
+  committed to the Git repository and are used to generate the HTML files.
 - **Authentication via Salesforce:** Visitors can authenticate with their
   Salesforce customer community user via the OpenID Connect protocol. This
   requires only a minimal Lightning Community configuration and a Connected App
   in Salesforce.
+- **Individual User Content:** Once logged in the website visitors can view
+  their own user profile which displays their Account data from Salesforce. This
+  data is fetched via the little API server so that visitors do not communicate
+  directly with the Salesforce REST API.
 - **Client-Side Shopping Cart:** All items added to the shopping cart are stored
   client-side in the browser's local storage. No server communication required.
   Visitors can still close the browser and have their cart content restored when
-  accessing the page again (with same browser on same device).
-- **Order Transmission to Salesforce:** Orders are sent to Salesforce using the
-  Salesforce REST API. For security reasons this API is not directly accessed by
-  the browser. Communication works via a little API server acting as a gateway.
+  accessing the page again (with the same browser on the same device).
+- **Order Transmission to Salesforce:** Logged in visitors can place orders by
+  sending their shopping cart to the API server. This server transforms the cart
+  data into a proper Salesforce order and transmits the records via the
+  Salesforce REST API.
 
 ## JAMStack Architecture
 
 <p>
-  <img src="https://dummyimage.com/600x400/666/fff" alt="Dummy"
-    width="600" height="400" style="width:100%;height:auto;" />
+  <img src="docs/jamstack-architecture.svg" alt="JAMStack Architecture"
+    width="800" height="600" style="width:100%;height:auto;" />
 </p>
 
 Since the pages accessed by the website visitors are not generated dynamically
@@ -89,6 +94,9 @@ than in "traditional" web applications.
    example, it can run on a CI server like [Travis CI](https://travis-ci.org/)
    trigged by a web hook or serverless function.
 
+   _Note: Salesforce is just an example of a potential data source to acquire
+   content from. Content files can also be created from any other data source._
+
 3. **Publishing Static HTML Files:** Every commit in the Git repository
    represents a certain implementation and content state of the website which
    can potentially be published.
@@ -100,10 +108,16 @@ than in "traditional" web applications.
    Finally, all generated website files can be published to any web server or
    Content Delivery Network, e.g. [Netlify](https://www.netlify.com/).
 
-4. **Dynamic Enhancement via APIs:** Statically generated HTML does not mean
-   that the website cannot include any dynamic features. These features like the
-   shopping cart or personal user content are simply executed client-side when
-   the web application has loaded in the browser.
+   _Note: The build process can also leverage API requests to load content which
+   is not stored in content files in the Git repository._
+
+4. **Dynamic Enhancement via APIs:** Visitors are served static HTML files when
+   loading the website in the browser. This is extremely fast because nothing
+   needs dynamically generated on the server.
+
+   Once the web page has loaded the dynamic JavaScript kicks in and enhances the
+   page with dynamic features. This can be features like the shopping cart or
+   displaying personalized user content.
 
    Dynamic data can be fetched by sending API requests from the browser.
    Visitors can authenticate using standard protocols like OAuth 2.0 and OpenID
