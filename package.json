@@ -1,6 +1,9 @@
 {
-  "name": "jamstack-ecommerce",
+  "name": "jamstack-ecommerce-example",
+  "description": "Showcase of an e-commerce website built with the JAMStack",
   "version": "1.0.0",
+  "author": "Georg Wittberger <georg.wittberger@gmail.com>",
+  "license": "MIT",
   "private": true,
   "scripts": {
     "dev": "nuxt-ts",

@@ -1,7 +1,7 @@
 {
-  "name": "jamstack-ecommerce-api",
-  "version": "1.0.0",
+  "name": "jamstack-ecommerce-example-api",
   "description": "API server for the JAMStack E-Commerce example",
+  "version": "1.0.0",
   "main": "index.ts",
   "author": "Georg Wittberger <georg.wittberger@gmail.com>",
   "license": "MIT",

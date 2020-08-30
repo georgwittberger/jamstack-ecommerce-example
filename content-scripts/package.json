@@ -1,7 +1,7 @@
 {
-  "name": "jamstack-ecommerce-content-scripts",
-  "version": "1.0.0",
+  "name": "jamstack-ecommerce-example-content-scripts",
   "description": "Scripts to load content for the JAMStack E-Commerce example",
+  "version": "1.0.0",
   "main": "index.ts",
   "author": "Georg Wittberger <georg.wittberger@gmail.com>",
   "license": "MIT",
