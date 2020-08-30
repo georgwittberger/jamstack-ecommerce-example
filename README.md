@@ -1,4 +1,4 @@
-<p style="text-align:center;">
+<p align="center">
   <img src="docs/jamstack-ecommerce-logo.png" alt="JAMStack E-Commerce Logo"
     width="600" height="800" style="width:100%;max-width:600px;height:auto;" />
 </p>
