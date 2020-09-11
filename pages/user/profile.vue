@@ -49,7 +49,20 @@ export default class UserProfilePage extends Vue {
   }
 
   async created() {
-    this.contactInfo = await this.userModule.getContactInfo()
+    try {
+      const { data, error } = await this.userModule.getContactInfo()
+      if (data) {
+        this.contactInfo = data
+      } else if (error) {
+        if (error.isUnauthorized) {
+          this.$auth.redirect('login')
+        } else {
+          console.error('Error loading contact info. ', error.message)
+        }
+      }
+    } catch (error) {
+      console.error('Error loading contact info. ', error)
+    }
   }
 }
 </script>

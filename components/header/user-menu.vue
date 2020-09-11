@@ -10,11 +10,16 @@
 
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
+import { getModule } from 'vuex-module-decorators'
+import CartModule from '@/store/cart'
 
 @Component
 export default class UserMenu extends Vue {
+  private cartModule = getModule(CartModule, this.$store)
+
   logout(event: Event) {
     event.preventDefault()
+    this.cartModule.clearCartItems()
     this.$auth.logout()
   }
 }

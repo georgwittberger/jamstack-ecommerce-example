@@ -12,7 +12,7 @@ const standardPriceBookName =
   process.env.SALESFORCE_PRICE_BOOK_NAME || 'Standard Price Book'
 
 export async function placeOrder(
-  authorization: string,
+  userId: string,
   configuration: OrderConfiguration,
   orderItems: OrderItem[]
 ): Promise<Order> {
@@ -27,7 +27,7 @@ export async function placeOrder(
     .map((orderItem) => `'${orderItem.productId}'`)
     .join(',')
   const [contactInfo, priceBookQueryResult] = await Promise.all([
-    getContactInfo(authorization),
+    getContactInfo(userId),
     executeSoqlQuery<PriceBookQueryResult>(
       `SELECT Id, (SELECT Id,Product2Id,UnitPrice FROM PricebookEntries WHERE Product2Id IN (${orderItemsProductIds})) FROM Pricebook2 WHERE Name = '${standardPriceBookName}'`
     ),

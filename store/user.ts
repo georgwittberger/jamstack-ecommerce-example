@@ -1,5 +1,6 @@
 import { Action, Module, Mutation, VuexModule } from 'vuex-module-decorators'
 import { $axios } from '@/plugins/global-axios'
+import { ApiError } from '@/types/api-error'
 import { ContactInfo } from '@/types/user/contact-info'
 
 @Module({
@@ -16,12 +17,23 @@ export default class UserModule extends VuexModule {
   }
 
   @Action
-  async getContactInfo(): Promise<ContactInfo> {
+  async getContactInfo(): Promise<ContactInfoResult> {
     if (this.contactInfo) {
-      return this.contactInfo
+      return { data: this.contactInfo }
     }
-    const contactInfo: ContactInfo = await $axios.$get('/contactinfo')
-    this.context.commit('addContactInfoToState', contactInfo)
-    return contactInfo
+    try {
+      const contactInfo: ContactInfo = await $axios.$get('/contactinfo')
+      this.context.commit('addContactInfoToState', contactInfo)
+      return { data: contactInfo }
+    } catch (error) {
+      return {
+        error: new ApiError(
+          error?.response?.status || 0,
+          error?.response?.data?.error || 'Unknown error'
+        ),
+      }
+    }
   }
 }
+
+type ContactInfoResult = { data?: ContactInfo; error?: ApiError }

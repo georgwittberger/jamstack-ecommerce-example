@@ -1,6 +1,7 @@
 import { Action, Module, Mutation, VuexModule } from 'vuex-module-decorators'
 import { v4 as uuid4 } from 'uuid'
 import { $axios } from '@/plugins/global-axios'
+import { ApiError } from '@/types/api-error'
 import { CartItem } from '@/types/cart/cart-item'
 import { CartConfiguration } from '@/types/cart/cart-configuration'
 import { Order } from '@/types/cart/order'
@@ -130,19 +131,34 @@ export default class CartModule extends VuexModule {
   }
 
   @Action
-  async placeOrder(): Promise<Order> {
-    const order: Order = await $axios.$post('/orders', {
-      configuration: this.cartConfiguration,
-      orderItems: this.cartItems.map((cartItem) => ({
-        productId: cartItem.productId,
-        quantity: cartItem.quantity,
-      })),
-    })
-    this.context.commit('setRecentOrderNumber', order.number)
+  clearCartConfiguration(): void {
     this.context.commit('resetCartConfigurationState')
-    this.context.commit('removeAllCartItemsFromState')
     this.context.dispatch('persistState')
-    return order
+  }
+
+  @Action
+  async placeOrder(): Promise<OrderResult> {
+    try {
+      const order: Order = await $axios.$post('/orders', {
+        configuration: this.cartConfiguration,
+        orderItems: this.cartItems.map((cartItem) => ({
+          productId: cartItem.productId,
+          quantity: cartItem.quantity,
+        })),
+      })
+      this.context.commit('setRecentOrderNumber', order.number)
+      this.context.commit('resetCartConfigurationState')
+      this.context.commit('removeAllCartItemsFromState')
+      this.context.dispatch('persistState')
+      return { data: order }
+    } catch (error) {
+      return {
+        error: new ApiError(
+          error?.response?.status || 0,
+          error?.response?.data?.error || 'Unknown error'
+        ),
+      }
+    }
   }
 
   @Action
@@ -179,3 +195,5 @@ type PersistentCartState = {
   cartItems: CartItem[]
   cartConfiguration: CartConfiguration
 }
+
+type OrderResult = { data?: Order; error?: ApiError }

@@ -1,10 +1,5 @@
 export default {
   /*
-   * Nuxt rendering mode
-   * See https://nuxtjs.org/api/configuration-mode
-   */
-  mode: 'universal',
-  /*
    * Nuxt target
    * See https://nuxtjs.org/api/configuration-target
    */
@@ -110,18 +105,19 @@ export default {
       login: '/login',
       callback: '/login/callback',
     },
+    resetOnError: true,
+    plugins: ['@/plugins/auth-initializer'],
     strategies: {
       local: false,
       oauth2: {
         _scheme: 'oauth2',
         authorization_endpoint: process.env.OAUTH2_AUTHORIZE_ENDPOINT,
         userinfo_endpoint: process.env.OAUTH2_USERINFO_ENDPOINT,
-        access_token_endpoint: process.env.OAUTH2_TOKEN_ENDPOINT,
         client_id: process.env.OAUTH2_CLIENT_ID,
         scope: (process.env.OAUTH2_SCOPES || 'openid,profile').split(','),
+        response_type: 'token id_token',
         token_type: 'Bearer',
-        token_key: 'access_token',
-        refresh_token_key: 'refresh_token',
+        token_key: 'id_token',
       },
     },
   },

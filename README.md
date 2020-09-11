@@ -207,6 +207,10 @@ secure way.
      - Perform requests on your behalf at any time (refresh_token,
        offline_access)
    - Require Secret for Web Server Flow: Deactivated
+   - Configure ID Token: Activated
+   - Token Valid for: (some reasonable session lifetime, e.g. 240 minutes)
+   - ID Token Audiences: (leave empty, meaning consumer key is used)
+   - Include Standard Claims: Activated
 3. From the Connected App View copy the "Consumer Key" and the "Consumer Secret"
    for later use in configuration parameters.
 4. Click the button "Manage" and then "Edit Policies".
@@ -215,6 +219,10 @@ secure way.
    the profile previously created for customer community users (e.g. "Example
    Customer User") and the profile for the integration user (e.g. "System
    Administrator").
+
+<p>
+  <img src="docs/salesforce-connected-app.png" alt="Salesforce Connected App Configuration" style="max-width:100%;" />
+</p>
 
 ### Running the Content Update Script
 
@@ -270,19 +278,20 @@ in some Price Book used for the content update.
 1. Open a terminal in the directory `api`.
 2. Set the following environment variables.
 
-   | Name                         | Description                                                                  |
-   | ---------------------------- | ---------------------------------------------------------------------------- |
-   | PORT                         | Local server port to listen on. Default: 3000                                |
-   | SALESFORCE_INSTANCE_URL      | Base URL of the Salesforce instance (pattern `https://xx##.salesforce.com` ) |
-   | SALESFORCE_API_VERSION       | Salesforce API version to use                                                |
-   | SALESFORCE_USERINFO_ENDPOINT | OAuth 2.0 user info endpoint of the Salesforce Lightning Community           |
-   | SALESFORCE_TOKEN_ENDPOINT    | OAuth 2.0 token endpoint of the Salesforce instance (not community)          |
-   | SALESFORCE_CLIENT_ID         | Consumer Key of the Connected App (copied before from App view)              |
-   | SALESFORCE_CLIENT_SECRET     | Consumer Secret of the Connected App (copied before from App view)           |
-   | SALESFORCE_USERNAME          | Username of the integration user                                             |
-   | SALESFORCE_PASSWORD          | Password of the integration user + security token (simply concat the two)    |
-   | SALESFORCE_PRICE_BOOK_NAME   | Optional. Price book to use. Default: "Standard Price Book"                  |
-   | SECURITY_CORS_ORIGIN         | Base URL of the web application allowed to access the server.                |
+   | Name                       | Description                                                                    |
+   | -------------------------- | ------------------------------------------------------------------------------ |
+   | PORT                       | Local server port to listen on. Default: 3000                                  |
+   | SALESFORCE_INSTANCE_URL    | Base URL of the Salesforce instance (pattern `https://xx##.salesforce.com` )   |
+   | SALESFORCE_API_VERSION     | Salesforce API version to use                                                  |
+   | SALESFORCE_TOKEN_ENDPOINT  | OAuth 2.0 token endpoint of the Salesforce instance (not community)            |
+   | SALESFORCE_JWKS_ENDPOINT   | OpenID Connect JSON Web Key Set endpoint of the Salesforce Lightning Community |
+   | SALESFORCE_ISSUER_URL      | Issuer URL included in the ID token issued by Salesforce                       |
+   | SALESFORCE_CLIENT_ID       | Consumer Key of the Connected App (copied before from App view)                |
+   | SALESFORCE_CLIENT_SECRET   | Consumer Secret of the Connected App (copied before from App view)             |
+   | SALESFORCE_USERNAME        | Username of the integration user                                               |
+   | SALESFORCE_PASSWORD        | Password of the integration user + security token (simply concat the two)      |
+   | SALESFORCE_PRICE_BOOK_NAME | Optional. Price book to use. Default: "Standard Price Book"                    |
+   | SECURITY_CORS_ORIGIN       | Base URL of the web application allowed to access the server.                  |
 
    Example:
 
@@ -290,8 +299,9 @@ in some Price Book used for the content update.
    PORT=4000
    SALESFORCE_INSTANCE_URL=https://eu25.salesforce.com
    SALESFORCE_API_VERSION=49.0
-   SALESFORCE_USERINFO_ENDPOINT=https://georgwittberger-developer-edition.eu25.force.com/services/oauth2/userinfo
    SALESFORCE_TOKEN_ENDPOINT=https://login.salesforce.com/services/oauth2/token
+   SALESFORCE_JWKS_ENDPOINT=https://georgwittberger-developer-edition.eu25.force.com/id/keys
+   SALESFORCE_ISSUER_URL=https://georgwittberger-developer-edition.eu25.force.com
    SALESFORCE_CLIENT_ID=3MVG9...ru7XA
    SALESFORCE_CLIENT_SECRET=17DAD...0110F
    SALESFORCE_USERNAME=integration@georg.wittberger.force.com
@@ -324,7 +334,6 @@ in some Price Book used for the content update.
    | API_URL                   | Base URL of the API server                                             |
    | OAUTH2_AUTHORIZE_ENDPOINT | OAuth 2.0 authorization endpoint of the Salesforce Lightning Community |
    | OAUTH2_USERINFO_ENDPOINT  | User info endpoint of the API server                                   |
-   | OAUTH2_TOKEN_ENDPOINT     | OAuth 2.0 token endpoint of the Salesforce Lightning Community         |
    | OAUTH2_CLIENT_ID          | Consumer Key of the Connected App (copied before from App view)        |
    | OAUTH2_SCOPES             | OAuth 2.0 scopes to request during authentication, comma-separated     |
 
@@ -334,9 +343,8 @@ in some Price Book used for the content update.
    API_URL=http://localhost:4000
    OAUTH2_AUTHORIZE_ENDPOINT=https://georgwittberger-developer-edition.eu25.force.com/services/oauth2/authorize
    OAUTH2_USERINFO_ENDPOINT=http://localhost:4000/userinfo
-   OAUTH2_TOKEN_ENDPOINT=https://georgwittberger-developer-edition.eu25.force.com/services/oauth2/token
    OAUTH2_CLIENT_ID=3MVG9...ru7XA
-   OAUTH2_SCOPES=openid,id,refresh_token
+   OAUTH2_SCOPES=openid,id
    ```
 
    _Tip: You can put these variable assignments in a file called `.env` in the

@@ -1,16 +1,12 @@
 import { executeSoqlQuery } from '../salesforce/adapter'
 import { SoqlQueryResult } from '../salesforce/types'
-import { getUserInfo } from '../user-info/get-user-info'
 import { ContactInfo } from './types'
 
-export async function getContactInfo(
-  authorization: string
-): Promise<ContactInfo> {
-  const { user_id } = await getUserInfo(authorization)
-  if (!user_id) {
-    throw new Error('User info does not contain user ID')
+export async function getContactInfo(userId: string): Promise<ContactInfo> {
+  if (!userId) {
+    throw new Error('Missing user ID argument')
   }
-  const soqlQuery = `SELECT Contact.Id,Contact.FirstName,Contact.LastName,Account.Id,Account.Name,Account.AccountNumber,Account.BillingAddress FROM User WHERE Id='${user_id}'`
+  const soqlQuery = `SELECT Contact.Id,Contact.FirstName,Contact.LastName,Account.Id,Account.Name,Account.AccountNumber,Account.BillingAddress FROM User WHERE Id='${userId}'`
   const userQueryResult = await executeSoqlQuery<UserQueryResult>(soqlQuery)
   return createContactInfo(userQueryResult)
 }
