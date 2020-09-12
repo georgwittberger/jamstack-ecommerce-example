@@ -5,7 +5,9 @@ import { koaJwtSecret } from 'jwks-rsa'
 import Koa from 'koa'
 import bodyParser from 'koa-bodyparser'
 import jwt from 'koa-jwt'
+import logger from 'koa-pino-logger'
 import ms from 'ms'
+import log from './global-logger'
 import authorizationErrorHandler from './authorization-error-handler'
 import { createContactInfoRouter } from './contact-info/router'
 import { createOrdersRouter } from './orders/router'
@@ -30,6 +32,12 @@ router.use(
 )
 router.use('/orders', ordersRouter.routes(), ordersRouter.allowedMethods())
 
+app.use(
+  logger({
+    level: process.env.NODE_ENV === 'development' ? 'debug' : 'warn',
+    prettyPrint: process.env.NODE_ENV === 'development',
+  })
+)
 app.use(authorizationErrorHandler)
 app.use(cors({ origin: process.env.SECURITY_CORS_ORIGIN, credentials: true }))
 app.use(
@@ -47,4 +55,4 @@ app.use(
 app.use(bodyParser())
 app.use(router.routes()).use(router.allowedMethods())
 app.listen(port)
-console.info(`Server listening on port ${port}`)
+log.info('Server listening on port %d', port)
