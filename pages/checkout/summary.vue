@@ -89,6 +89,9 @@ export default class CheckoutSummaryPage extends Vue {
   }
 
   async created() {
+    if (!this.cartModule.cartConfiguration.confirmed) {
+      this.$router.replace('/checkout/configuration')
+    }
     try {
       const { data, error } = await this.userModule.getContactInfo()
       if (data) {

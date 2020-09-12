@@ -122,6 +122,7 @@ export default class CheckoutConfigurationPage extends Vue {
   }
 
   continueToSummary() {
+    this.cartModule.updateCartConfiguration({ confirmed: true })
     this.$router.push('/checkout/summary')
   }
 }
