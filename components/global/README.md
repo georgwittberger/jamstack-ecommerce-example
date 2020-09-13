@@ -1,4 +1,5 @@
 # GLOBAL COMPONENTS
 
-This directory is a dummy because @nuxt/components seems to register it as
-component directory, thus resulting in a warning message if it does not exist.
+The directory contains global components to be used inside content files without
+having to import them manually. See
+<https://content.nuxtjs.org/writing#vue-components>
