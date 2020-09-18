@@ -5,7 +5,6 @@
   "description": "A heavy hammer to make every problem a nail.",
   "price": 21.99,
   "category": {
-    "id": "123",
     "name": "Tools",
     "slug": "tools"
   }

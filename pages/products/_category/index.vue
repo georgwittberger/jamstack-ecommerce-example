@@ -63,7 +63,7 @@ export default class ProductCategoryPage extends Vue {
   }
 
   head() {
-    return { title: 'All Products' }
+    return { title: this.category ? this.category.name : 'Category' }
   }
 
   @Watch('selectedSortingOption')

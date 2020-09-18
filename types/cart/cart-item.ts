@@ -4,6 +4,7 @@ export type CartItem = {
   productSku: string
   productName: string
   productSlug: string
+  categorySlug: string
   quantity: number
   unitPrice: number
   totalPrice: number

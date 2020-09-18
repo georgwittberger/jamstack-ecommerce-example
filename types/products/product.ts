@@ -6,11 +6,9 @@ export type Product = {
   name: string
   description: string
   price: number
-  category: {
-    id: string
-    name: string
-    slug: string
-  }
+  category: ProductCategory
 }
 
 export type ProductResult = Product & NuxtContentResult
+
+type ProductCategory = { name: string; slug: string }

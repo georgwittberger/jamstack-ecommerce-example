@@ -1,0 +1,11 @@
+{
+  "id": "01t2o00000ANU7oAAH",
+  "sku": "A-006-1",
+  "name": "Work Shoes",
+  "description": "A pair of protective shoes in case you drop the hammer.",
+  "price": 0,
+  "category": {
+    "name": "Other",
+    "slug": "other"
+  }
+}

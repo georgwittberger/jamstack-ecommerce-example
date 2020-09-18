@@ -1,7 +1,10 @@
 <template>
   <b-table :fields="tableColumns" :items="cartItems" responsive="sm" hover>
     <template v-slot:cell(productName)="data">
-      <nuxt-link :to="`/products/${data.item.productSlug}`" v-if="!readOnly">
+      <nuxt-link
+        :to="`/products/${data.item.categorySlug}/${data.item.productSlug}`"
+        v-if="!readOnly"
+      >
         {{ data.item.productName }}
       </nuxt-link>
       <span v-if="readOnly">{{ data.item.productName }}</span>

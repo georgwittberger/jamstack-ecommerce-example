@@ -95,6 +95,7 @@ export default class CartModule extends VuexModule {
       productSku: product.sku,
       productName: product.name,
       productSlug: product.slug,
+      categorySlug: product.category.slug,
       quantity,
       unitPrice: product.price,
       totalPrice: product.price * quantity,
