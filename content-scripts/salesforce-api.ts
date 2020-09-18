@@ -1,5 +1,6 @@
 import axios, { AxiosRequestConfig } from 'axios'
 import querystring from 'querystring'
+import log from './logger'
 
 export async function getAccessToken(): Promise<string> {
   if (!process.env.SALESFORCE_TOKEN_ENDPOINT) {
@@ -16,6 +17,7 @@ export async function getAccessToken(): Promise<string> {
     password: process.env.SALESFORCE_PASSWORD,
   }
 
+  log.info('Requesting Salesforce access token...')
   const { data } = await axios.post(
     process.env.SALESFORCE_TOKEN_ENDPOINT,
     querystring.stringify(authenticationRequestParams),
@@ -25,6 +27,8 @@ export async function getAccessToken(): Promise<string> {
   if (!data?.access_token) {
     throw new Error('Authentication request did not return any access token')
   }
+
+  log.info('Salesforce access token received.')
   return data.access_token
 }
 
@@ -43,6 +47,7 @@ export async function executeSoqlQuery(
       Authorization: `Bearer ${accessToken}`,
     },
   }
+  log.debug('Executing SOQL query: %s', [soqlQuery])
   const { data } = await axios.request(request)
   return data
 }
