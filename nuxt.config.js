@@ -63,7 +63,9 @@ export default {
    * Content module configuration
    * See https://content.nuxtjs.org/configuration
    */
-  content: {},
+  content: {
+    nestedProperties: ['category.slug'],
+  },
   /*
    * Build configuration
    * See https://nuxtjs.org/api/configuration-build/
@@ -90,6 +92,7 @@ export default {
       'ImagePlugin',
       'JumbotronPlugin',
       'LayoutPlugin',
+      'ListGroupPlugin',
       'NavPlugin',
       'NavbarPlugin',
       'TablePlugin',

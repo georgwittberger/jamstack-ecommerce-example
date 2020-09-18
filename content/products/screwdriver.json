@@ -3,5 +3,10 @@
   "sku": "A-001-1",
   "name": "Screwdriver",
   "description": "A very robust screwdriver that will drive you crazy.",
-  "price": 17.99
+  "price": 17.99,
+  "category": {
+    "id": "123",
+    "name": "Tools",
+    "slug": "tools"
+  }
 }

@@ -3,5 +3,10 @@
   "sku": "A-002-1",
   "name": "Hammer",
   "description": "A heavy hammer to make every problem a nail.",
-  "price": 21.99
+  "price": 21.99,
+  "category": {
+    "id": "123",
+    "name": "Tools",
+    "slug": "tools"
+  }
 }

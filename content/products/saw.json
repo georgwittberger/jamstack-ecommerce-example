@@ -3,5 +3,10 @@
   "sku": "A-003-1",
   "name": "Saw",
   "description": "A sharp saw to cut your life into pieces.",
-  "price": 34.99
+  "price": 34.99,
+  "category": {
+    "id": "123",
+    "name": "Tools",
+    "slug": "tools"
+  }
 }

@@ -3,5 +3,10 @@
   "sku": "A-004-1",
   "name": "Drilling Machine",
   "description": "A powerful drilling machine usable without a drill instructor.",
-  "price": 129.99
+  "price": 129.99,
+  "category": {
+    "id": "456",
+    "name": "Machines",
+    "slug": "machines"
+  }
 }

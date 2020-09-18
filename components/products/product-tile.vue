@@ -10,7 +10,7 @@
       {{ product.description }}
     </b-card-text>
     <nuxt-link
-      :to="`/products/${product.slug}`"
+      :to="`/products/${product.category.slug}/${product.slug}`"
       no-prefetch
       class="btn btn-outline-secondary"
     >

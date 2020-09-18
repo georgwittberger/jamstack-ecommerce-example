@@ -3,5 +3,10 @@
   "sku": "A-005-1",
   "name": "Chainsaw",
   "description": "A roaring chainsaw for the next massacre.",
-  "price": 159.99
+  "price": 159.99,
+  "category": {
+    "id": "456",
+    "name": "Machines",
+    "slug": "machines"
+  }
 }

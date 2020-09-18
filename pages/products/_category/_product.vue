@@ -43,10 +43,7 @@ import { ProductResult } from '@/types/products/product'
 
 @Component({
   async asyncData({ $content, params }) {
-    const product: ProductResult = await $content(
-      'products',
-      params.slug
-    ).fetch()
+    const product = await $content('products', params.product).fetch()
     return { product }
   },
 })
