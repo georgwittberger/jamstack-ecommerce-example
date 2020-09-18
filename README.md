@@ -89,8 +89,8 @@ than in "traditional" web applications.
    updated accordingly and can be committed to the Git repository.
 
    It is completely up to you where and when this script is executed. For
-   example, it can run on a CI server like [Travis CI](https://travis-ci.org/)
-   trigged by a web hook or serverless function.
+   example, it can run as a [GitHub Action](https://github.com/features/actions)
+   or in a CI process on [Travis CI](https://travis-ci.org/).
 
    _Note: Salesforce is just an example of a potential data source to acquire
    content from. Content files can also be created from any other data source._
@@ -149,6 +149,29 @@ Why? It enables the login with a real customer user in the Lightning Community.
    - Enter your own e-mail address to receive the welcome e-mail message once
      the user is added as member to the community.
 
+#### Installing the Salesforce Metadata
+
+This step is only required if you are planning to use the content update script.
+
+Why? It adds the custom object "Product Category" to your Salesforce org and
+installs a custom field on the Product2 object to let you define the category a
+product belongs to.
+
+1. Download and install
+   [Salesforce CLI](https://developer.salesforce.com/tools/sfdxcli).
+2. Open a terminal in the directory `salesforce`.
+3. Connect Salesforce CLI to your Salesforce org.
+
+   ```bash
+   sfdx force:auth:web:login -a MyOrg -s
+   ```
+
+4. Deploy the SFDX project to your Salesforce org.
+
+   ```bash
+   sfdx force:source:deploy -p force-app
+   ```
+
 #### Setting Up the Integration User
 
 Why? It allows the API server and content script to connect to Salesforce with a
@@ -160,11 +183,13 @@ specific technical user which allows for individual access control.
    - Assign the profile "System Administrator".
    - Give the user some name like "Integration".
    - Enter your own e-mail address in order to receive the registration e-mail.
-3. Confirm the verification e-mail and complete the user registration by
+3. If you are planning to use the content update script please assign the
+   permission set "Product Category Editor" to the integration user.
+4. Confirm the verification e-mail and complete the user registration by
    entering a new password.
-4. Log in to Salesforce with that integration user.
-5. In the user menu next to the Setup icon select "Settings".
-6. Navigate to "Reset My Security Token" and click the button "Reset Security
+5. Log in to Salesforce with that integration user.
+6. In the user menu next to the Setup icon select "Settings".
+7. Navigate to "Reset My Security Token" and click the button "Reset Security
    Token". You should receive the new token via e-mail.
 
 #### Setting Up the Lightning Community
@@ -227,23 +252,29 @@ secure way.
 ### Running the Content Update Script
 
 This step is optional because the Git repository already contains some example
-products for demonstration. You should have some records for the Product2 object
-in your Salesforce organization and these products must have Price Book Entries
-in some Price Book used for the content update.
+products and categories for demonstration.
+
+You should have some records for the Product2 object in your Salesforce org
+which are active and have Price Book Entries in some Price Book used for the
+content update.
+
+You may also create some Product Categories and assign them to your products.
+
+_Note: The script requires the Salesforce metadata to be deployed in your org._
 
 1. Open a terminal in the directory `content-scripts`.
 2. Set the following environment variables.
 
-   | Name                       | Description                                                                  |
-   | -------------------------- | ---------------------------------------------------------------------------- |
-   | SALESFORCE_INSTANCE_URL    | Base URL of the Salesforce instance (pattern `https://xx##.salesforce.com` ) |
-   | SALESFORCE_API_VERSION     | Salesforce API version to use                                                |
-   | SALESFORCE_TOKEN_ENDPOINT  | OAuth 2.0 token endpoint of the Salesforce instance                          |
-   | SALESFORCE_CLIENT_ID       | Consumer Key of the Connected App (copied before from App view)              |
-   | SALESFORCE_CLIENT_SECRET   | Consumer Secret of the Connected App (copied before from App view)           |
-   | SALESFORCE_USERNAME        | Username of the integration user                                             |
-   | SALESFORCE_PASSWORD        | Password of the integration user + security token (simply concat the two)    |
-   | SALESFORCE_PRICE_BOOK_NAME | Optional. Price book to use. Default: "Standard Price Book"                  |
+   | Name                       | Description                                                                    |
+   | -------------------------- | ------------------------------------------------------------------------------ |
+   | SALESFORCE_INSTANCE_URL    | Base URL of the Salesforce instance (pattern `https://xx##.salesforce.com` )   |
+   | SALESFORCE_API_VERSION     | Salesforce API version to use                                                  |
+   | SALESFORCE_TOKEN_ENDPOINT  | OAuth 2.0 token endpoint of the Salesforce instance                            |
+   | SALESFORCE_CLIENT_ID       | Consumer Key of the Connected App (copied before from App view)                |
+   | SALESFORCE_CLIENT_SECRET   | Consumer Secret of the Connected App (copied before from App view)             |
+   | SALESFORCE_USERNAME        | Username of the integration user                                               |
+   | SALESFORCE_PASSWORD        | Password of the integration user + security token (simply concatenate the two) |
+   | SALESFORCE_PRICE_BOOK_NAME | Optional. Price book to use. Default: "Standard Price Book"                    |
 
    Example:
 
@@ -266,8 +297,8 @@ in some Price Book used for the content update.
    yarn install
    ```
 
-4. Run the script to update the products JSON files in the directory
-   `content/products`.
+4. Run the script to update the categories and products JSON files in the
+   directory `content`.
 
    ```bash
    yarn start
