@@ -16,6 +16,7 @@ storage for products and orders as well as for user authentication.
     - [Prerequisites](#prerequisites)
     - [Setting Up Salesforce](#setting-up-salesforce)
       - [Setting Up the Test User and Profile](#setting-up-the-test-user-and-profile)
+      - [Installing the Salesforce Metadata](#installing-the-salesforce-metadata)
       - [Setting Up the Integration User](#setting-up-the-integration-user)
       - [Setting Up the Lightning Community](#setting-up-the-lightning-community)
       - [Setting Up the Connected App](#setting-up-the-connected-app)
