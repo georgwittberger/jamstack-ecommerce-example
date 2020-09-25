@@ -8,6 +8,12 @@
       fast shopping experience.
     </p>
     <b-button variant="primary" to="/products">Browse All Products</b-button>
+    <b-button
+      variant="secondary"
+      href="https://github.com/georgwittberger/jamstack-ecommerce-example"
+    >
+      View GitHub Project
+    </b-button>
   </b-jumbotron>
 </template>
 
