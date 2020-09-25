@@ -13,7 +13,9 @@ async function execute() {
 execute()
   .then(() => {
     log.info('Content update successful')
+    process.exitCode = 0
   })
   .catch((error) => {
     log.error('Content update failed. %o', error)
+    process.exitCode = 1
   })
