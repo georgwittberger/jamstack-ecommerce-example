@@ -9,22 +9,13 @@
   "scripts": {
     "start": "ts-node index.ts"
   },
+  "engines": {
+    "node": "12.x",
+    "yarn": "1.x"
+  },
   "dependencies": {
     "@koa/cors": "^3.1.0",
     "@koa/router": "^9.4.0",
-    "axios": "^0.20.0",
-    "dotenv": "^8.2.0",
-    "jwks-rsa": "^1.9.0",
-    "koa": "^2.13.0",
-    "koa-bodyparser": "^4.3.0",
-    "koa-jwt": "^4.0.0",
-    "koa-pino-logger": "^3.0.0",
-    "ms": "^2.1.2",
-    "pino": "^6.6.0",
-    "ts-node": "^9.0.0",
-    "typescript": "^4.0.2"
-  },
-  "devDependencies": {
     "@types/axios": "^0.14.0",
     "@types/dotenv": "^8.2.0",
     "@types/koa": "^2.11.4",
@@ -34,6 +25,17 @@
     "@types/koa__router": "^8.0.2",
     "@types/ms": "^0.7.31",
     "@types/pino": "^6.3.0",
-    "pino-pretty": "^4.2.1"
+    "axios": "^0.20.0",
+    "dotenv": "^8.2.0",
+    "jwks-rsa": "^1.9.0",
+    "koa": "^2.13.0",
+    "koa-bodyparser": "^4.3.0",
+    "koa-jwt": "^4.0.0",
+    "koa-pino-logger": "^3.0.0",
+    "ms": "^2.1.2",
+    "pino": "^6.6.0",
+    "pino-pretty": "^4.2.1",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.0.2"
   }
 }
