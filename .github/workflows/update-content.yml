@@ -1,0 +1,44 @@
+name: Update Content from Salesforce
+on:
+  workflow_dispatch:
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+      - name: Set up Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - name: Get Yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - name: Restore Yarn cache
+        uses: actions/cache@v2
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-content-${{ hashFiles('content-scripts/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-content-
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+        working-directory: ./content-scripts
+      - name: Update content files
+        run: yarn start
+        working-directory: ./content-scripts
+        env:
+          NODE_ENV: production
+          SALESFORCE_INSTANCE_URL: 'https://eu25.salesforce.com'
+          SALESFORCE_API_VERSION: '49.0'
+          SALESFORCE_TOKEN_ENDPOINT: 'https://login.salesforce.com/services/oauth2/token'
+          SALESFORCE_CLIENT_ID: ${{ secrets.SALESFORCE_CLIENT_ID }}
+          SALESFORCE_CLIENT_SECRET: ${{ secrets.SALESFORCE_CLIENT_SECRET }}
+          SALESFORCE_USERNAME: 'integration@georg.wittberger.force.com'
+          SALESFORCE_PASSWORD: ${{ secrets.SALESFORCE_PASSWORD }}
+      - name: Commit updated files
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Update content files
+          file_pattern: content/**/*.json
