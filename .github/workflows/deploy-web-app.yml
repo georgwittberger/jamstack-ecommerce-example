@@ -1,0 +1,36 @@
+name: Deploy Web App to Netlify
+on:
+  push:
+    branches:
+      - 'master'
+    paths-ignore:
+      - 'api/**'
+      - 'docs/**'
+      - 'salesforce/**'
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+      - name: Set up Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+      - name: Generate site
+        run: yarn generate
+        env:
+          API_URL: 'https://jamstack-ecommerce-example-api.herokuapp.com'
+          OAUTH2_AUTHORIZE_ENDPOINT: 'https://georgwittberger-developer-edition.eu25.force.com/services/oauth2/authorize'
+          OAUTH2_USERINFO_ENDPOINT: 'https://jamstack-ecommerce-example-api.herokuapp.com/userinfo'
+          OAUTH2_CLIENT_ID: ${{ secrets.SALESFORCE_CLIENT_ID }}
+          OAUTH2_SCOPES: 'openid,id'
+      - name: Deploy site to Netlify
+        uses: netlify/actions/cli@master
+        with:
+          args: deploy --dir=dist --prod
+        env:
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
