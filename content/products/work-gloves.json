@@ -1,0 +1,11 @@
+{
+  "id": "01t2o00000ANb8xAAD",
+  "sku": "A-007-1",
+  "name": "Work Gloves",
+  "description": "A pair of gloves to protect your sensitive fingers.",
+  "price": 0,
+  "category": {
+    "name": "Other",
+    "slug": "other"
+  }
+}
