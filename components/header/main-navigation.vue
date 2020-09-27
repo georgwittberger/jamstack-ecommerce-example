@@ -1,7 +1,15 @@
 <template>
   <b-navbar toggleable="lg" variant="primary" type="dark">
     <b-container>
-      <b-navbar-brand to="/">DemoTools</b-navbar-brand>
+      <b-navbar-brand to="/">
+        <img
+          src="@/assets/images/header-logo.svg"
+          alt="Demo Tools Logo"
+          width="576"
+          height="128"
+          class="main-nav__logo"
+        />
+      </b-navbar-brand>
       <b-navbar-toggle target="main-nav-collapse"></b-navbar-toggle>
       <b-collapse id="main-nav-collapse" is-nav>
         <b-navbar-nav v-if="mainNavigationContent">
@@ -39,4 +47,9 @@ export default class MainNavigation extends Vue {
 }
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.main-nav__logo {
+  height: 1.5rem;
+  width: auto;
+}
+</style>
