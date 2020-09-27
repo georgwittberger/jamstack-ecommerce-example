@@ -1,5 +1,6 @@
 <template>
   <div v-if="product">
+    <b-breadcrumb :items="breadcrumbItems"></b-breadcrumb>
     <h1>{{ product.name }}</h1>
     <b-row>
       <b-col cols="12" md="4" class="product-detail__column">
@@ -41,15 +42,25 @@ import { getModule } from 'vuex-module-decorators'
 import CartModule from '@/store/cart'
 import { ProductResult } from '@/types/products/product'
 
+const rootBreadcrumbItem = { text: 'All Products', to: '/products' }
+
 @Component({
   async asyncData({ $content, params }) {
-    const product = await $content('products', params.product).fetch()
-    return { product }
+    const product = await $content('products', params.product).fetch<
+      ProductResult
+    >()
+    const breadcrumbItems = [
+      rootBreadcrumbItem,
+      { text: product.category.name, to: `/products/${product.category.slug}` },
+      { text: product.name, active: true },
+    ]
+    return { product, breadcrumbItems }
   },
 })
 export default class ProductDetailPage extends Vue {
   product: ProductResult | null = null
   quantity = 1
+  breadcrumbItems = []
   private cartModule = getModule(CartModule, this.$store)
 
   head() {

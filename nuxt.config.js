@@ -81,6 +81,7 @@ export default {
     bootstrapCSS: false,
     bootstrapVueCSS: false,
     componentPlugins: [
+      'BreadcrumbPlugin',
       'ButtonPlugin',
       'ButtonGroupPlugin',
       'CardPlugin',

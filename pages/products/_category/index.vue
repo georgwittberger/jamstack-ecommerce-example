@@ -1,5 +1,6 @@
 <template>
   <div>
+    <b-breadcrumb :items="breadcrumbItems"></b-breadcrumb>
     <template v-if="category">
       <h1>{{ category.name }}</h1>
       <p>{{ category.description }}</p>
@@ -44,19 +45,26 @@ const sortingOptions: SortingOption[] = [
   { label: 'Sort by name descending', field: 'name', direction: 'desc' },
 ]
 
+const rootBreadcrumbItem = { text: 'All Products', to: '/products' }
+
 @Component({
   async asyncData({ $content, params }) {
     const [category, products] = await Promise.all([
-      $content('categories', params.category).fetch(),
+      $content('categories', params.category).fetch<CategoryResult>(),
       fetchProducts($content, params.category, sortingOptions[0]),
     ])
-    return { category, products }
+    const breadcrumbItems = [
+      rootBreadcrumbItem,
+      { text: category.name, active: true },
+    ]
+    return { category, products, breadcrumbItems }
   },
 })
 export default class ProductCategoryPage extends Vue {
   category: CategoryResult | null = null
   products: Partial<ProductResult>[] = []
   selectedSortingOption: SortingOption = sortingOptions[0]
+  breadcrumbItems = []
 
   get sortingOptions(): SortingOption[] {
     return sortingOptions
