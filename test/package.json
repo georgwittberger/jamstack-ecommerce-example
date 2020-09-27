@@ -1,0 +1,13 @@
+{
+  "name": "jamstack-ecommerce-example-test",
+  "version": "1.0.0",
+  "description": "End-to-end tests for the JAMStack E-Commerce example",
+  "main": "index.js",
+  "author": "Georg Wittberger <georg.wittberger@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "cypress": "^5.2.0",
+    "typescript": "^4.0.3"
+  }
+}
