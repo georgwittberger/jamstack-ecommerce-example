@@ -74,7 +74,16 @@ export default class AllProductsPage extends Vue {
   }
 
   head() {
-    return { title: 'All Products' }
+    return {
+      title: 'All Products',
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: 'Overview of all products',
+        },
+      ],
+    }
   }
 
   @Watch('selectedSortingOption')

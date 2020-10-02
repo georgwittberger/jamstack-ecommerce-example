@@ -71,7 +71,16 @@ export default class ProductCategoryPage extends Vue {
   }
 
   head() {
-    return { title: this.category ? this.category.name : 'Category' }
+    return {
+      title: this.category ? this.category.name : 'Category',
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: `Overview of products belonging to category ${this.category?.name}`,
+        },
+      ],
+    }
   }
 
   @Watch('selectedSortingOption')

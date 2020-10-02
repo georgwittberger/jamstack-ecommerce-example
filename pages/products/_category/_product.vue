@@ -64,7 +64,16 @@ export default class ProductDetailPage extends Vue {
   private cartModule = getModule(CartModule, this.$store)
 
   head() {
-    return { title: this.product ? this.product.name : 'Product' }
+    return {
+      title: this.product ? this.product.name : 'Product',
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: this.product ? this.product.description : '',
+        },
+      ],
+    }
   }
 
   async addProductToCart() {
