@@ -31,6 +31,8 @@ export default class DefaultLayout extends Vue {}
   left: 0;
   right: 0;
   bottom: 0;
+  padding: 0.3rem 1rem;
   text-align: center;
+  z-index: 1000;
 }
 </style>
