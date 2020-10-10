@@ -1,4 +1,4 @@
-import { writeFileSync } from 'fs'
+import { existsSync, mkdirSync, writeFileSync } from 'fs'
 import * as path from 'path'
 import rimraf from 'rimraf'
 import log from './logger'
@@ -7,15 +7,8 @@ import { executeSoqlQuery } from './salesforce-api'
 export async function updateCategoriesContent(
   accessToken: string
 ): Promise<Category[]> {
-  const categoriesContentPath = getCategoriesContentPath()
-
   log.info('Removing old category content files...')
-  await new Promise<void>((resolve, reject) =>
-    rimraf(path.resolve(categoriesContentPath, '*.json'), (error) => {
-      if (!error) resolve()
-      else reject(error)
-    })
-  )
+  await deleteCategoriesContentFiles()
   log.info('Category content files removed.')
 
   log.info('Requesting new category content...')
@@ -30,6 +23,7 @@ export async function updateCategoriesContent(
   categories.push(otherCategory)
 
   log.info('Writing new category content files...')
+  const categoriesContentPath = createCategoriesContentPath()
   categories.forEach((category) => {
     const categoryFilePath = path.resolve(
       categoriesContentPath,
@@ -46,6 +40,15 @@ export async function updateCategoriesContent(
   return categories
 }
 
+function deleteCategoriesContentFiles(): Promise<void> {
+  return new Promise<void>((resolve, reject) =>
+    rimraf(path.resolve(getCategoriesContentPath(), '*.json'), (error) => {
+      if (!error) resolve()
+      else reject(error)
+    })
+  )
+}
+
 function createCategoriesContent(categoriesQueryResult: any): Category[] {
   if (!categoriesQueryResult?.records) return []
   const records: any[] = categoriesQueryResult.records
@@ -57,6 +60,14 @@ function convertRecordToCategory(record: any): Category {
     name: record.Name,
     description: record.jsec_Description__c,
   }
+}
+
+function createCategoriesContentPath(): string {
+  const categoriesContentPath = getCategoriesContentPath()
+  if (!existsSync(categoriesContentPath)) {
+    mkdirSync(categoriesContentPath, { recursive: true })
+  }
+  return categoriesContentPath
 }
 
 export function getCategoriesContentPath(): string {

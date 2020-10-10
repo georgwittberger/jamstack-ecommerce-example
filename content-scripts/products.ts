@@ -1,4 +1,4 @@
-import { writeFileSync } from 'fs'
+import { existsSync, mkdirSync, writeFileSync } from 'fs'
 import * as path from 'path'
 import rimraf from 'rimraf'
 import { getCategorySlug, otherCategory } from './categories'
@@ -11,15 +11,8 @@ const standardPriceBookName =
 export async function updateProductsContent(
   accessToken: string
 ): Promise<Product[]> {
-  const productsContentPath = getProductsContentPath()
-
   log.info('Removing old product content files...')
-  await new Promise<void>((resolve, reject) =>
-    rimraf(path.resolve(productsContentPath, '*.json'), (error) => {
-      if (!error) resolve()
-      else reject(error)
-    })
-  )
+  await deleteProductsContentFiles()
   log.info('Product content files removed.')
 
   log.info('Requesting new product content...')
@@ -38,11 +31,17 @@ export async function updateProductsContent(
   const products = createProductsContent(productsQueryResult)
 
   log.info('Writing new product content files...')
+  const productsContentPath = createProductsContentPath()
   products.forEach((product) => {
-    const productFilePath = path.resolve(
+    const productDirectoryPath = path.resolve(
       productsContentPath,
+      product.category.slug
+    )
+    const productFilePath = path.resolve(
+      productDirectoryPath,
       `${getProductSlug(product.name)}.json`
     )
+    ensureDirectoryExists(productDirectoryPath)
     writeFileSync(productFilePath, JSON.stringify(product, null, 2), 'utf8')
     log.info('Written: %s', productFilePath)
   })
@@ -52,6 +51,15 @@ export async function updateProductsContent(
     products.length
   )
   return products
+}
+
+function deleteProductsContentFiles(): Promise<void> {
+  return new Promise<void>((resolve, reject) =>
+    rimraf(path.resolve(getProductsContentPath(), '**/*.json'), (error) => {
+      if (!error) resolve()
+      else reject(error)
+    })
+  )
 }
 
 function createProductsContent(productsQueryResult: any): Product[] {
@@ -89,6 +97,18 @@ function getProductCategory(record: any): ProductCategory {
         name: otherCategory.name,
         slug: getCategorySlug(otherCategory.name),
       }
+}
+
+function createProductsContentPath(): string {
+  const productsContentPath = getProductsContentPath()
+  ensureDirectoryExists(productsContentPath)
+  return productsContentPath
+}
+
+function ensureDirectoryExists(path: string): void {
+  if (!existsSync(path)) {
+    mkdirSync(path, { recursive: true })
+  }
 }
 
 export function getProductsContentPath(): string {

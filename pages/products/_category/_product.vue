@@ -46,9 +46,11 @@ const rootBreadcrumbItem = { text: 'All Products', to: '/products' }
 
 @Component({
   async asyncData({ $content, params }) {
-    const product = await $content('products', params.product).fetch<
-      ProductResult
-    >()
+    const product = await $content(
+      'products',
+      params.category,
+      params.product
+    ).fetch<ProductResult>()
     const breadcrumbItems = [
       rootBreadcrumbItem,
       { text: product.category.name, to: `/products/${product.category.slug}` },

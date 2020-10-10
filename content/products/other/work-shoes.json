@@ -3,7 +3,7 @@
   "sku": "A-006-1",
   "name": "Work Shoes",
   "description": "A pair of protective shoes in case you drop the hammer.",
-  "price": 0,
+  "price": 89.99,
   "category": {
     "name": "Other",
     "slug": "other"

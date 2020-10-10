@@ -98,9 +98,8 @@ function fetchProducts(
   categorySlug: string,
   sortingOption: SortingOption
 ): Promise<Partial<ProductResult>[]> {
-  return $content('products')
+  return $content('products', categorySlug)
     .only(['id', 'name', 'description', 'slug', 'category'])
-    .where({ 'category.slug': categorySlug })
     .sortBy(sortingOption.field, sortingOption.direction)
     .fetch()
 }

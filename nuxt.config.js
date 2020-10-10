@@ -66,9 +66,7 @@ export default {
    * Content module configuration
    * See https://content.nuxtjs.org/configuration
    */
-  content: {
-    nestedProperties: ['category.slug'],
-  },
+  content: {},
   /*
    * Build configuration
    * See https://nuxtjs.org/api/configuration-build/

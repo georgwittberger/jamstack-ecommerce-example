@@ -96,7 +96,7 @@ function fetchProducts(
   $content: Vue['$content'],
   sortingOption: SortingOption
 ): Promise<Partial<ProductResult>[]> {
-  return $content('products')
+  return $content('products', { deep: true })
     .only(['id', 'name', 'description', 'slug', 'category'])
     .sortBy(sortingOption.field, sortingOption.direction)
     .fetch()
