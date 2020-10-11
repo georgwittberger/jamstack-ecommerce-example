@@ -1,6 +1,7 @@
 # JAMStack E-Commerce Example Tests
 
-This is an example how to run end-to-end tests for the website using Cypress.
+This is an example how to run end-to-end tests for the website using
+[Cypress](https://www.cypress.io/).
 
 ## Setting Up the Website
 
@@ -29,8 +30,10 @@ export CYPRESS_BASE_URL=https://jamstack-ecommerce-example.netlify.app
 
 ## Running the Tests
 
+Open a terminal in this `test` directory of the project.
+
 Before running the tests for the very first time you must install the Node.js
-dependencies.
+dependencies using the following command.
 
 ```bash
 yarn install
@@ -40,12 +43,12 @@ In order to run the tests in the terminal only (without any GUI) you should run
 the following command.
 
 ```bash
-yarn cypress run
+yarn test
 ```
 
 If you want to open the Cypress GUI and run the tests from there you can execute
 the following command.
 
 ```bash
-yarn cypress open
+yarn dev
 ```

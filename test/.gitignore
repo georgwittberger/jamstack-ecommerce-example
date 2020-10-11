@@ -1,2 +1,4 @@
-cypress/screenshots
-cypress/videos
+cypress/screenshots/
+cypress/videos/
+node_modules/
+debug.log
