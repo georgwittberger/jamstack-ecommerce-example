@@ -2,15 +2,15 @@
   <b-table :fields="tableColumns" :items="cartItems" responsive="sm" hover>
     <template v-slot:cell(productName)="data">
       <nuxt-link
-        :to="`/products/${data.item.categorySlug}/${data.item.productSlug}`"
+        :to="`/products/${data.item.product.category.slug}/${data.item.product.slug}`"
         v-if="!readOnly"
       >
-        {{ data.item.productName }}
+        {{ data.item.product.name }}
       </nuxt-link>
-      <span v-if="readOnly">{{ data.item.productName }}</span>
+      <span v-if="readOnly">{{ data.item.product.name }}</span>
     </template>
     <template v-slot:cell(productNumber)="data">
-      {{ data.item.productSku }}
+      {{ data.item.product.sku }}
     </template>
     <template v-slot:cell(quantity)="data">
       <b-form-input

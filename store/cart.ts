@@ -91,11 +91,7 @@ export default class CartModule extends VuexModule {
   addCartItem({ product, quantity }: AddCartItemOptions): CartItem {
     const item: CartItem = {
       id: uuid4(),
-      productId: product.id,
-      productSku: product.sku,
-      productName: product.name,
-      productSlug: product.slug,
-      categorySlug: product.category.slug,
+      product: product,
       quantity,
       unitPrice: product.price,
       totalPrice: product.price * quantity,
@@ -143,7 +139,7 @@ export default class CartModule extends VuexModule {
       const order: Order = await $axios.$post('/orders', {
         configuration: this.cartConfiguration,
         orderItems: this.cartItems.map((cartItem) => ({
-          productId: cartItem.productId,
+          productId: cartItem.product.id,
           quantity: cartItem.quantity,
         })),
       })

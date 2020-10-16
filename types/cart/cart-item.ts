@@ -1,10 +1,8 @@
+import { ProductResult } from '@/types/products/product'
+
 export type CartItem = {
   id: string
-  productId: string
-  productSku: string
-  productName: string
-  productSlug: string
-  categorySlug: string
+  product: ProductResult
   quantity: number
   unitPrice: number
   totalPrice: number
