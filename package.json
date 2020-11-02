@@ -12,30 +12,30 @@
     "generate": "nuxt-ts generate"
   },
   "dependencies": {
-    "@nuxt/content": "^1.8.1",
+    "@nuxt/content": "^1.10.0",
     "@nuxt/typescript-runtime": "^2.0.0",
     "@nuxtjs/auth": "^4.9.1",
     "@nuxtjs/axios": "^5.12.2",
-    "bootstrap": "^4.5.2",
-    "bootstrap-vue": "^2.16.0",
-    "nuxt": "^2.14.5",
-    "nuxt-property-decorator": "^2.7.2",
+    "bootstrap": "^4.5.3",
+    "bootstrap-vue": "^2.17.3",
+    "nuxt": "^2.14.7",
+    "nuxt-property-decorator": "^2.8.8",
     "uuid": "^8.3.0",
     "vue": "^2.6.12",
-    "vue-class-component": "^7.2.5",
-    "vue-currency-filter": "^5.1.1"
+    "vue-class-component": "^7.2.6",
+    "vue-currency-filter": "^5.2.0"
   },
   "devDependencies": {
-    "@nuxt/types": "^2.14.5",
+    "@nuxt/types": "^2.14.7",
     "@nuxt/typescript-build": "^2.0.3",
-    "@types/nuxtjs__auth": "^4.8.4",
+    "@types/nuxtjs__auth": "^4.8.5",
     "@types/uuid": "^8.3.0",
-    "eslint": "^7.7.0",
-    "eslint-config-prettier": "^6.11.0",
+    "eslint": "^7.10.0",
+    "eslint-config-prettier": "^6.12.0",
     "eslint-plugin-prettier": "^3.1.4",
-    "node-sass": "^4.14.1",
-    "prettier": "^2.0.5",
-    "sass-loader": "^9.0.3",
-    "webpack": "^4.44.0"
+    "prettier": "^2.1.2",
+    "sass": "^1.28.0",
+    "sass-loader": "^10.0.4",
+    "webpack": "^4.44.2"
   }
 }

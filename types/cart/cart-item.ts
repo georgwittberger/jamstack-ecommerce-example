@@ -1,8 +1,9 @@
-import { ProductResult } from '@/types/products/product'
+import { IContentDocument } from '@nuxt/content/types/content'
+import { ProductDocument } from '@/types/products/product'
 
 export type CartItem = {
   id: string
-  product: ProductResult
+  product: ProductDocument & IContentDocument
   quantity: number
   unitPrice: number
   totalPrice: number

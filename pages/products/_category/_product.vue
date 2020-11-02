@@ -38,19 +38,20 @@
 
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
+import { IContentDocument } from '@nuxt/content/types/content'
 import { getModule } from 'vuex-module-decorators'
 import CartModule from '@/store/cart'
-import { ProductResult } from '@/types/products/product'
+import { ProductDocument } from '@/types/products/product'
 
 const rootBreadcrumbItem = { text: 'All Products', to: '/products' }
 
 @Component({
   async asyncData({ $content, params }) {
-    const product = await $content(
+    const product = (await $content(
       'products',
       params.category,
       params.product
-    ).fetch<ProductResult>()
+    ).fetch<ProductDocument>()) as ProductDocument & IContentDocument
     const breadcrumbItems = [
       rootBreadcrumbItem,
       { text: product.category.name, to: `/products/${product.category.slug}` },
@@ -60,7 +61,7 @@ const rootBreadcrumbItem = { text: 'All Products', to: '/products' }
   },
 })
 export default class ProductDetailPage extends Vue {
-  product: ProductResult | null = null
+  product: (ProductDocument & IContentDocument) | null = null
   quantity = 1
   breadcrumbItems = []
   private cartModule = getModule(CartModule, this.$store)

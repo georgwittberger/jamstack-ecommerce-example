@@ -1,6 +1,4 @@
-import { NuxtContentResult } from '@/types/nuxt-content-result'
-
-type MainNavigation = {
+export type MainNavigationDocument = {
   entries: MainNavigationEntry[]
 }
 
@@ -8,5 +6,3 @@ type MainNavigationEntry = {
   name: string
   path: string
 }
-
-export type MainNavigationResult = MainNavigation & NuxtContentResult

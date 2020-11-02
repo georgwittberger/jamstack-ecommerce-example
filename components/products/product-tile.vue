@@ -21,11 +21,12 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'nuxt-property-decorator'
-import { ProductResult } from '@/types/products/product'
+import { IContentDocument } from '@nuxt/content/types/content'
+import { ProductDocument } from '@/types/products/product'
 
 @Component
 export default class ProductTile extends Vue {
-  @Prop() product!: Partial<ProductResult>
+  @Prop() product!: Partial<ProductDocument & IContentDocument>
 }
 </script>
 

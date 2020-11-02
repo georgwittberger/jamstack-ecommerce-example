@@ -1,6 +1,4 @@
-import { NuxtContentResult } from '@/types/nuxt-content-result'
-
-export type Product = {
+export type ProductDocument = {
   id: string
   sku: string
   name: string
@@ -8,7 +6,5 @@ export type Product = {
   price: number
   category: ProductCategory
 }
-
-export type ProductResult = Product & NuxtContentResult
 
 type ProductCategory = { name: string; slug: string }

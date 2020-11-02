@@ -36,10 +36,11 @@
 
 <script lang="ts">
 import { Vue, Component, Watch } from 'nuxt-property-decorator'
-import { CategoryResult } from '@/types/categories/category'
-import { ProductResult } from '@/types/products/product'
+import { IContentDocument } from '@nuxt/content/types/content'
+import { CategoryDocument } from '@/types/categories/category'
+import { ProductDocument } from '@/types/products/product'
 
-type SortingOption = { label: string; field: string; direction: string }
+type SortingOption = { label: string; field: string; direction: 'asc' | 'desc' }
 const sortingOptions: SortingOption[] = [
   { label: 'Sort by name ascending', field: 'name', direction: 'asc' },
   { label: 'Sort by name descending', field: 'name', direction: 'desc' },
@@ -50,7 +51,7 @@ const rootBreadcrumbItem = { text: 'All Products', to: '/products' }
 @Component({
   async asyncData({ $content, params }) {
     const [category, products] = await Promise.all([
-      $content('categories', params.category).fetch<CategoryResult>(),
+      $content('categories', params.category).fetch<CategoryDocument>() as Promise<CategoryDocument & IContentDocument>,
       fetchProducts($content, params.category, sortingOptions[0]),
     ])
     const breadcrumbItems = [
@@ -61,8 +62,8 @@ const rootBreadcrumbItem = { text: 'All Products', to: '/products' }
   },
 })
 export default class ProductCategoryPage extends Vue {
-  category: CategoryResult | null = null
-  products: Partial<ProductResult>[] = []
+  category: (CategoryDocument & IContentDocument) | null = null
+  products: Partial<ProductDocument & IContentDocument>[] = []
   selectedSortingOption: SortingOption = sortingOptions[0]
   breadcrumbItems = []
 
@@ -97,11 +98,11 @@ function fetchProducts(
   $content: Vue['$content'],
   categorySlug: string,
   sortingOption: SortingOption
-): Promise<Partial<ProductResult>[]> {
+): Promise<Partial<ProductDocument & IContentDocument>[]> {
   return $content('products', categorySlug)
     .only(['id', 'name', 'description', 'slug', 'category'])
     .sortBy(sortingOption.field, sortingOption.direction)
-    .fetch()
+    .fetch<ProductDocument>() as Promise<Partial<ProductDocument & IContentDocument>[]>
 }
 </script>
 

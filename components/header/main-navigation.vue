@@ -35,14 +35,14 @@
 
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
-import { MainNavigationResult } from '@/types/header/main-navigation'
+import { MainNavigationDocument } from '@/types/header/main-navigation'
 
 @Component
 export default class MainNavigation extends Vue {
-  mainNavigationContent: MainNavigationResult | null = null
+  mainNavigationContent: MainNavigationDocument | null = null
 
   async fetch() {
-    this.mainNavigationContent = await this.$content('main-navigation').fetch()
+    this.mainNavigationContent = (await this.$content('main-navigation').fetch<MainNavigationDocument>()) as MainNavigationDocument
   }
 }
 </script>

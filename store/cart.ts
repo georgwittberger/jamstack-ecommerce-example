@@ -1,11 +1,12 @@
 import { Action, Module, Mutation, VuexModule } from 'vuex-module-decorators'
+import { IContentDocument } from '@nuxt/content/types/content'
 import { v4 as uuid4 } from 'uuid'
 import { $axios } from '@/plugins/global-axios'
 import { ApiError } from '@/types/api-error'
-import { CartItem } from '@/types/cart/cart-item'
 import { CartConfiguration } from '@/types/cart/cart-configuration'
+import { CartItem } from '@/types/cart/cart-item'
 import { Order } from '@/types/cart/order'
-import { ProductResult } from '@/types/products/product'
+import { ProductDocument } from '@/types/products/product'
 
 @Module({
   name: 'cart',
@@ -179,7 +180,7 @@ export default class CartModule extends VuexModule {
 const cartStateStorageKey = 'cart.state'
 
 type AddCartItemOptions = {
-  product: ProductResult
+  product: ProductDocument & IContentDocument
   quantity: number
 }
 
