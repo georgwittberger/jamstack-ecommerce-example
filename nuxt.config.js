@@ -5,6 +5,13 @@ export default {
    */
   target: 'static',
   /*
+   * Environment variables
+   * See https://nuxtjs.org/docs/2.x/configuration-glossary/configuration-env
+   */
+  env: {
+    LOGOUT_URL: process.env.LOGOUT_URL,
+  },
+  /*
    * Headers of the page
    * See https://nuxtjs.org/api/configuration-head
    */

@@ -52,6 +52,9 @@ storage for products and orders as well as for user authentication.
   sending their shopping cart to the API server. This server transforms the cart
   data into a proper Salesforce order and transmits the records via the
   Salesforce REST API.
+- **Delegated Logout via Salesforce:** When logging out on the website visitors
+  can be redirected to a special logout page in the Lightning Community to log
+  them out there as well and then return to the website.
 
 ## JAMStack Architecture
 
@@ -152,11 +155,14 @@ Why? It enables the login with a real customer user in the Lightning Community.
 
 #### Installing the Salesforce Metadata
 
-This step is only required if you are planning to use the content update script.
+This step is required if you are planning to use the content update script and
+if you want to set up automatic logout in the Lightning Community when users log
+out in the website.
 
 Why? It adds the custom object "Product Category" to your Salesforce org and
 installs a custom field on the Product2 object to let you define the category a
-product belongs to.
+product belongs to. It also installs a Lightning Web Component to be used on a
+special logout community page which will automatically log the user out.
 
 1. Download and install
    [Salesforce CLI](https://developer.salesforce.com/tools/sfdxcli).
@@ -213,6 +219,25 @@ authentication flow.
    community users (e.g. "Example Customer User"). You should receive a welcome
    e-mail message for the test user created before. Complete the user
    registration by entering a new password.
+
+If you want to set up automatic logout for community users when they log out on
+the website perform these additional steps:
+
+1. Open the "Workspace" of the community and go to "Administration".
+2. In the "Login & Registration" section enter the website's logout URL in the
+   "Logout Page URL" field (e.g. if running the website on
+   <http://localhost:3000> enter the URL <http://localhost:3000/logout>)
+3. Switch back to Salesforce Setup at "All Communities" and open the "Builder"
+   of the community.
+4. Create a blank standard page with an arbitrary content layout (e.g. "1
+   full-width column"). Give the page the name "Logout" and the URL "logout".
+5. In the page settings set "Page Access" to "Requires Login".
+6. Drag the custom component "JSEC Auto Logout" from the "Components" panel to
+   the content region of the page. Do not be confused: This will immediately
+   redirect you to an error page in Experience Builder because that component
+   attempts to log the user out when rendered. This is just an indicator that
+   the component works as expected.
+7. Publish the changes made to the community.
 
 #### Setting Up the Connected App
 
@@ -364,6 +389,7 @@ _Note: The script requires the Salesforce metadata to be deployed in your org._
    | Name                      | Description                                                            |
    | ------------------------- | ---------------------------------------------------------------------- |
    | API_URL                   | Base URL of the API server                                             |
+   | LOGOUT_URL                | Optional. Logout page URL of the Salesforce Lightning Community        |
    | OAUTH2_AUTHORIZE_ENDPOINT | OAuth 2.0 authorization endpoint of the Salesforce Lightning Community |
    | OAUTH2_USERINFO_ENDPOINT  | User info endpoint of the API server                                   |
    | OAUTH2_CLIENT_ID          | Consumer Key of the Connected App (copied before from App view)        |
@@ -373,6 +399,7 @@ _Note: The script requires the Salesforce metadata to be deployed in your org._
 
    ```bash
    API_URL=http://localhost:4000
+   LOGOUT_URL=https://georgwittberger-developer-edition.eu25.force.com/s/logout
    OAUTH2_AUTHORIZE_ENDPOINT=https://georgwittberger-developer-edition.eu25.force.com/services/oauth2/authorize
    OAUTH2_USERINFO_ENDPOINT=http://localhost:4000/userinfo
    OAUTH2_CLIENT_ID=3MVG9...ru7XA
@@ -381,6 +408,9 @@ _Note: The script requires the Salesforce metadata to be deployed in your org._
 
    _Tip: You can put these variable assignments in a file called `.env` in the
    project root directory for development and testing._
+
+   _Note: If the variable `LOGOUT_URL` is not provided users will be redirected
+   to the website's logout page immediately without external roundtrip._
 
 3. Install the Node.js dependencies.
 

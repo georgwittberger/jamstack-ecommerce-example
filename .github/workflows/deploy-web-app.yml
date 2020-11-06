@@ -36,6 +36,7 @@ jobs:
         run: yarn generate
         env:
           API_URL: 'https://jamstack-ecommerce-example-api.herokuapp.com'
+          LOGOUT_URL: 'https://georgwittberger-developer-edition.eu25.force.com/s/logout'
           OAUTH2_AUTHORIZE_ENDPOINT: 'https://georgwittberger-developer-edition.eu25.force.com/services/oauth2/authorize'
           OAUTH2_USERINFO_ENDPOINT: 'https://jamstack-ecommerce-example-api.herokuapp.com/userinfo'
           OAUTH2_CLIENT_ID: ${{ secrets.SALESFORCE_CLIENT_ID }}
