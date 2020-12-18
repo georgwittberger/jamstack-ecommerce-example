@@ -17,13 +17,13 @@
         <div class="product-list__toolbar">
           <b-button-group>
             <b-button
-              v-for="option in sortingOptions"
-              :key="option.label"
+              v-for="productSortOption in productSortOptions"
+              :key="productSortOption.label"
               variant="outline-secondary"
-              :pressed="selectedSortingOption === option"
-              @click="selectedSortingOption = option"
+              :pressed="selectedProductSortOption === productSortOption"
+              @click="selectedProductSortOption = productSortOption"
             >
-              {{ option.label }}
+              {{ productSortOption.label }}
             </b-button>
           </b-button-group>
         </div>
@@ -49,12 +49,7 @@ import { Vue, Component, Watch } from 'nuxt-property-decorator'
 import { IContentDocument } from '@nuxt/content/types/content'
 import { CategoryDocument } from '@/types/categories/category'
 import { ProductDocument } from '@/types/products/product'
-
-type SortingOption = { label: string; field: string; direction: 'asc' | 'desc' }
-const sortingOptions: SortingOption[] = [
-  { label: 'Sort by name ascending', field: 'name', direction: 'asc' },
-  { label: 'Sort by name descending', field: 'name', direction: 'desc' },
-]
+import { ProductSortOption, sortProducts } from '@/libs/product-sort'
 
 @Component({
   async asyncData({ $content }) {
@@ -62,8 +57,15 @@ const sortingOptions: SortingOption[] = [
       $content('categories')
         .only(['name', 'slug'])
         .sortBy('name')
-        .fetch<CategoryDocument>() as Promise<Partial<CategoryDocument & IContentDocument>[]>,
-      fetchProducts($content, sortingOptions[0]),
+        .fetch<CategoryDocument>() as Promise<
+        Partial<CategoryDocument & IContentDocument>[]
+      >,
+      $content('products', { deep: true })
+        .only(['id', 'name', 'description', 'slug', 'category'])
+        .sortBy('name')
+        .fetch<ProductDocument>() as Promise<
+        Partial<ProductDocument & IContentDocument>[]
+      >,
     ])
     return { categories, products }
   },
@@ -71,11 +73,11 @@ const sortingOptions: SortingOption[] = [
 export default class AllProductsPage extends Vue {
   categories: Partial<CategoryDocument & IContentDocument>[] = []
   products: Partial<ProductDocument & IContentDocument>[] = []
-  selectedSortingOption: SortingOption = sortingOptions[0]
-
-  get sortingOptions(): SortingOption[] {
-    return sortingOptions
-  }
+  productSortOptions: ProductSortOption[] = [
+    { label: 'Sort by name ascending', field: 'name', direction: 'asc' },
+    { label: 'Sort by name descending', field: 'name', direction: 'desc' },
+  ]
+  selectedProductSortOption: ProductSortOption = this.productSortOptions[0]
 
   head() {
     return {
@@ -90,20 +92,10 @@ export default class AllProductsPage extends Vue {
     }
   }
 
-  @Watch('selectedSortingOption')
-  async onSortingChanged(sortingOption: SortingOption) {
-    this.products = await fetchProducts(this.$content, sortingOption)
+  @Watch('selectedProductSortOption')
+  onProductSortOptionChanged(productSortOption: ProductSortOption) {
+    this.products = sortProducts(this.products, productSortOption)
   }
-}
-
-function fetchProducts(
-  $content: Vue['$content'],
-  sortingOption: SortingOption
-): Promise<Partial<ProductDocument & IContentDocument>[]> {
-  return $content('products', { deep: true })
-    .only(['id', 'name', 'description', 'slug', 'category'])
-    .sortBy(sortingOption.field, sortingOption.direction)
-    .fetch<ProductDocument>() as Promise<Partial<ProductDocument & IContentDocument>[]>
 }
 </script>
 
